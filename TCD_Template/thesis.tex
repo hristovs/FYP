@@ -31,9 +31,11 @@
 \usepackage{anysize}
 \usepackage{nth}
 \usepackage[table]{xcolor}
+\usepackage{epigraph}
 \usepackage{array,ragged2e}
 \usepackage{amsmath}
 \usepackage{longtable}
+
 \mastersthesis                     %% Uncomment one of these; if you don't
 %\phdthesis                         %% use either, the default is \phdthesis.
 
@@ -54,7 +56,8 @@
  \doublespace                       %% or double-spacing; the default is
                                      %% \oneandhalfspace, which is the
                                      %% minimum spacing accepted by the
-                                     %% Graduate School.
+\newcommand{\chapquote}[3]{\begin{quotation} \textit{#1} \end{quotation} \begin{flushright} - #2, \textit{#3}\end{flushright} }
+                           %% Graduate School.
 
 \renewcommand{\thesisauthor}{Samuil Hristov}            %% Your official UT name.
 \renewcommand{\thesismonth}{April}                  %% Your month of graduation.

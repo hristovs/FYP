@@ -64,7 +64,9 @@ Of course this doesn't mean that there isn't a concern about which blocks go in 
 \\
 
 
-Now that the allocation of PibBlocks to PibBlockchains was completed, and there were no longer any circular dependencies allowing for the code to be added to the security code hierarchy in NDN-CXX. 
+Now that the allocation of PibBlocks to PibBlockchains was completed, and there were no longer any circular dependencies allowing for the code to be added to the security code hierarchy in NDN-CXX. \par 
+
+Shortly after adding the code 
 
 
 \begin{figure}

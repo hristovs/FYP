@@ -16,7 +16,7 @@ Instead of transactions, this project aims to store certificates in a similar fa
  It is important to note that there isn't a monetary incentive for doing this "Proof-of-Work"[2] so each network should have a dedicated group of miners which verify blocks. The assumption here is that all(or most) of the nodes will not be malicious and will not be pooling their resources to attack the network. This means that in order for one to alter the list of certificates, they would have to have more computing power than the entire network of miners. This will allow for safer communication between nodes in a network. 
 
 \section{Road-map}
-The chapter so far has introduced the project. The following paragraph aims to outline the structure and purpose of the rest of the chapters.
+\chapquote{``Begin at the beginning," the King said gravely, ``and go on till you come to the end: then stop."}{Lewis Carroll}{Alice in Wonderland}
 
 This paper is structured as follows: State of the Art(Lit. Review), Design and Implementation, and Evaluation.
 \begin{itemize}

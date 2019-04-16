@@ -10,27 +10,33 @@
 \contentsline {section}{\numberline {2.1}{Introduction}}{4}% 
 \contentsline {section}{\numberline {2.2}Background and Summary}{5}% 
 \contentsline {section}{\numberline {2.3}SoA}{6}% 
-\contentsline {subsection}{\numberline {2.3.1}Security}{6}% 
-\contentsline {section}{\numberline {2.4}Literary Review}{8}% 
-\contentsline {subsection}{\numberline {2.4.1}Security}{8}% 
-\contentsline {subsection}{\numberline {2.4.2}Overview}{8}% 
-\contentsline {subsection}{\numberline {2.4.3}Content Store}{9}% 
-\contentsline {section}{\numberline {2.5}Blockchain}{10}% 
-\contentsline {subsection}{\numberline {2.5.1}Overview Paper}{10}% 
-\contentsline {subsection}{\numberline {2.5.2}Value Chain}{11}% 
-\contentsline {chapter}{Chapter{} \numberline {3}Design and Implementation}{12}% 
-\contentsline {section}{\numberline {3.1}Introduction}{12}% 
-\contentsline {section}{\numberline {3.2}The Development Platform}{12}% 
-\contentsline {subsection}{\numberline {3.2.1}MiniNDN}{12}% 
-\contentsline {section}{\numberline {3.3}The Data Structure}{14}% 
-\contentsline {subsection}{\numberline {3.3.1}Public Information Base Block}{14}% 
-\contentsline {subsection}{\numberline {3.3.2}Public Information Base Blockchain}{15}% 
-\contentsline {chapter}{Chapter{} \numberline {4}Design}{19}% 
-\contentsline {chapter}{Chapter{} \numberline {5}Simulations}{20}% 
-\contentsline {chapter}{Chapter{} \numberline {6}Results}{21}% 
-\contentsline {section}{\numberline {6.1}Ideal Evaluation}{21}% 
-\contentsline {subsection}{\numberline {6.1.1}Overhead and Latency}{21}% 
-\contentsline {section}{\numberline {6.2}Discussion}{21}% 
-\contentsline {chapter}{Chapter{} \numberline {7}Conclusions}{22}% 
-\contentsline {chapter}{Appendix{} \numberline {A}Abbreviations}{23}% 
-\contentsline {chapter}{Bibliography}{25}% 
+\contentsline {subsection}{\numberline {2.3.1}Names}{6}% 
+\contentsline {subsection}{\numberline {2.3.2}NFD}{7}% 
+\contentsline {subsection}{\numberline {2.3.3}NLSR}{7}% 
+\contentsline {subsection}{\numberline {2.3.4}Chronosync}{8}% 
+\contentsline {subsection}{\numberline {2.3.5}Content Store}{8}% 
+\contentsline {subsubsection}{Policies}{8}% 
+\contentsline {subsection}{\numberline {2.3.6}Security}{8}% 
+\contentsline {section}{\numberline {2.4}Literary Review}{10}% 
+\contentsline {subsection}{\numberline {2.4.1}Security}{10}% 
+\contentsline {subsection}{\numberline {2.4.2}Overview}{11}% 
+\contentsline {subsection}{\numberline {2.4.3}Content Store}{11}% 
+\contentsline {section}{\numberline {2.5}Blockchain}{13}% 
+\contentsline {subsection}{\numberline {2.5.1}Overview Paper}{13}% 
+\contentsline {subsection}{\numberline {2.5.2}Value Chain}{13}% 
+\contentsline {chapter}{Chapter{} \numberline {3}Design and Implementation}{14}% 
+\contentsline {section}{\numberline {3.1}Introduction}{14}% 
+\contentsline {section}{\numberline {3.2}The Development Platform}{14}% 
+\contentsline {subsection}{\numberline {3.2.1}MiniNDN}{14}% 
+\contentsline {section}{\numberline {3.3}The Data Structure}{16}% 
+\contentsline {subsection}{\numberline {3.3.1}Public Information Base Block}{16}% 
+\contentsline {subsection}{\numberline {3.3.2}Public Information Base Blockchain}{17}% 
+\contentsline {chapter}{Chapter{} \numberline {4}Design}{21}% 
+\contentsline {chapter}{Chapter{} \numberline {5}Simulations}{22}% 
+\contentsline {chapter}{Chapter{} \numberline {6}Results}{23}% 
+\contentsline {section}{\numberline {6.1}Ideal Evaluation}{23}% 
+\contentsline {subsection}{\numberline {6.1.1}Overhead and Latency}{23}% 
+\contentsline {section}{\numberline {6.2}Discussion}{23}% 
+\contentsline {chapter}{Chapter{} \numberline {7}Conclusions}{24}% 
+\contentsline {chapter}{Appendix{} \numberline {A}Abbreviations}{25}% 
+\contentsline {chapter}{Bibliography}{27}% 

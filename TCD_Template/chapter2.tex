@@ -45,8 +45,35 @@ Kohnfelder - Central Authority & Implementation & 3
 \end{tabular}
 \end{table}
 \section{SoA}
+\subsection{Names}
+An NDN Name is a hierarchical name for NDN content, which contains a sequence of name components.[named-data.net docs] Each NDN name component  consists of variable lengths and is separated by a '/' separator. This design is advantageous because it is human readable and allows for users to configure Interest and Data filters using regular expressions. \\
+E.g: InterestFilter$(^<ndn><lectures>)$ means listen for any interests beginning with /ndn/lectures. 
+Named Data Networking is all about names. When presenting on NDN at MILCOM 2017 in Baltimore, Lixia Zhang said "the secret to NDN is in the names!" This is because this networking paradigm  is entirely centered on the names of content. Each entity in a network has an identity, and each identity has a name. Each named entity in a network follows a hierarchical naming scheme.\par
+Names are represented by the name class in NDN. They are made up by a URI string. In C++, they are defined using the C-style const char* array. \par
+Packets are forwarded using Longest Name Prefix Matching(LNPM).[Yuan] 
+
+It is similar to IP Longest Prefix Match where a routing algorithm will, upon needing to do a look-up, return the longest matching address. E.g:
+Consider the following IPv4 Forwarding Table(CIDR Notation):\\
+192.168.20.16/28\\
+192.168.0.0/16\\
+If the router was to look-up 192.168.20.19, both entries will "match", but the router will only return 192.168.20.16/28 since the submask /28 is longer than the other entry's /16 submask. [example-wikipedia]
+
+A similar example could be given an Interest arriving at node B asking for /ndn/a-site/lectures/telecomms/slides  and node B's FIB could have entries for /ndn/a-site and /ndn/a-site/lectures/telecomms/ in which case it will only return the second entry. \par 
+
+The problem with LNPM comes from the inherent differences between address lengths in IP and NDN. In most cases, NDN names will be longer than IP as the namespace is unbounded. This is why NDN employs two techniques proposed in a Washington University paper by Haowei Yuan and Patrick Crowley. The first changes the LNPM design to a binary search of hash tables reducing lookups to O(log(k)) for prefixes with k components [yuan] and the second technique is level pulling to improve the average case. This makes the name prefix lookup solution scalable - a necessary feature for the NDN architecture to work. 
+
+\subsection{NFD}
+Named Data Forwarding Daemon is..
+\subsection{NLSR}
+Named Data Link State Routing is...
+\subsection{Chronosync}
+Chronosync is.....
+\subsection{Content Store}
+The Content Store or cache is each node's local storage. It contains signed Data which the node can forward to any node expressing an interest for it. Caching is one of NDN's main features.
+\subsubsection{Policies}
+A number of policies exist for caching....
 \subsection{Security}
-Ralph Merkle describes the problem with the classic[cit] Authenticated Public Key Distribution protocol which is used in NDN. He describes how each node in a network generate a public key and store it in a file system. If two nodes wish to agree on a common key in order to interact, they look up the Public Key portion of the other node. Then each send a \textbf{session key} encrypted with the other node's public key. Once in agreement, this key is secret and authenticated and can be used by both nodes to communicate. 
+Ralph Merkle describes the problem with the classic[cit] Authenticated Public Key Distribution protocol. He describes how each node in a network generates a public key and stores it in a file system. If two nodes wish to agree on a common key in order to interact, they look up the Public Key portion of the other node. Then each send a \textbf{session key} encrypted with the other node's public key. Once in agreement, this key is secret and authenticated and can be used by both nodes to communicate. 
 
 The problem with this approach is that a centralized file system is a single point of failure and is prone to attack. The attacks can be one of two - the public key elements can be altered in the file system(e.g. the attacking node could set another node's public key to be its own), and secondly, the private keys can be lost.
 
@@ -57,9 +84,12 @@ The problem with this approach is that a centralized file system is a single poi
  
   Back to bootstrapping: In order to do this, nodes must obtain a namespace and then a certificate for that namespace from a CA that they trust.[spyridon] The order for entities receiving certificates is hierarchical. This means that if a user(entity) has obtained a certificate, it can delegate certificates to other entities within its namespace.
  Because trust anchors are determined at the Application Layer - the only prerequisite[spyridon] for security bootstrapping is allocating names. As long as an entity has a name, it can receive a certificate if allowed by the owner of the namespace. 
- Each entity has its own trust anchors but should naturally trust the Certificate Authority. In the case of the root namespace - that is the recognized CA by the root user, as for the rest of the names in the namespace, that is the root namespace.
- \textbf{NDNCERT} is a library found in NDN-CXX which provides the tools necessary for a name to obtain a certificate in an NDN network. It generates certificates for trust anchors automatically and manages them in a daemon[spyridon]. It runs in an instance called an agent and maintains all certificates generated by NDNCERT.
- Data packets are signed at creation time[spyridon]. This design choice is critical in the integrity of data packets in NDN because this means that a data packet physically cannot be sent off without being signed. The important bit here isn't so much that all data sent is signed as much as the inverse - that all data received can be checked for a signature. As well as that NDNCERT can revoke certificates automatically if they are considered unfit. There is a check done on each certificate and if it is generated illegally, then in the case of the MiniNDN emulator, the code will throw an error and exit the session.
+ Each entity has its own trust anchors but should naturally trust the Certificate Authority. In the case of the root namespace - that is the recognized CA by the root user, as for the rest of the names in the namespace, that is the root namespace.\par
+ \textbf{NDNCERT} is a library found in NDN-CXX which provides the tools necessary for a name to obtain a certificate in an NDN network. It generates certificates for trust anchors automatically and manages them in a daemon[spyridon]. It runs in an instance called an agent and maintains all certificates generated by NDNCERT.\par
+As well as that NDNCERT can revoke certificates automatically if they are considered unfit. There is a check done on each certificate and if it is generated illegally, then in the case of the MiniNDN emulator, the code will throw an error and exit the session.\par
+Data packets are signed at creation time[spyridon]. This design choice is critical in the integrity of data packets in NDN because this means that a data packet physically cannot be sent off without being signed. The important bit here isn't so much that all data sent is signed as much as is the inverse - that all data received can be checked for a signature. 
+
+This makes Data verification twofold: Firstly, NDN uses Trust Anchors - so if a node is expecting data, it can define a trust anchor that states that the data can only arrive from one particular \textbf{name}. Secondly, and this is the traditional, cryptographic verification method, once the Data packet is received and passes the trust anchor check, the consumer of the Data packet retrieves the corresponding certificate for the producer which is identified by the key name section in the packet[spyridon]. The Certificate will then recursively point to the root certificate and if all certificates along the way are valid that means that the Data packet itself is signed with a valid signature.
 
 
 \section{Literary Review}
