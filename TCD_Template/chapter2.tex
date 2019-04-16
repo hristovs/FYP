@@ -1,0 +1,103 @@
+\chapter{State of the Art}
+\section{{Introduction}}
+The State of the Art in NDN and Blockchain was thoroughly investigated when researching this project. This was done to establish what technologies are currently implemented in Named Data Networking and also to identify similar projects to our own solution.\par It is important to note this was done to a lesser extent for Blockchain because it is a supplemental technology in the Cryptocurrency space and is relatively simplistic(i.e. a vector of blocks all hashed with the previous block's hash).The Blockchain "itself requires minimal structure"[3 - nakamoto] Therefore, the different nuances of the technology which deviate from the fundamentals weren't investigated as thoroughly as it was beyond the scope of the project specification which asked for a proof of concept Blockchain. This involves miner nodes solving basic proof of work or cryptographic puzzles[3 - nakamoto], based on a timestamped transaction, appending them to a chain, and advertising that chain to all nodes in the network. 
+
+This chapter is divided into Knowledge and Literary Review sections. The knowledge contextualizes this project by giving in depth background on all the technologies in use. 
+
+The Literary Review then describes each individual paper from which this information was obtained. 
+
+\section{Background and Summary}
+In 2006, Van Jacobson likens the ICN solution for the IP problem to the Copernican solution for the Solar System problem.[4 - van google videos] What he suggests by saying this is that IP was a(good) solution but for an entirely different problem than what the Internet is today. "While it is entirely doable to predict the movement of planetary bodies by taking the Earth to be the center of the universe, it is incredibly complex. This is because the point-of-view is wrong." [4 - van google videos] Dissemination Networking.
+
+The background for this research splits off into two parts. The Blockchain technology is largely based on cryptography and hashing. NDN on the other hand has its roots in networking. 
+
+The following table aims to quantify the usefulness of each paper that has been looked at. This method has been directly inspired by Masters student Conor Mooney who did an excellent job at scoring and qualifying his papers while researching. The categories for each paper reviewed fall under one of three categories: analysis, implementation, review.\\
+\begin{itemize}
+\item Analysis - Refers to papers which analyse a technology\\
+\item Implementation - Refers to papers which discuss technical aspects of the technologies which were used. These papers were mostly the NDN Developer Guides.\\
+\item Review - Reviews classify papers which mainly contribute with an evaluation - useful when there are different technologies that one might use for a particular problem, allowing for the narrowing down of solutions.\\
+\vfill
+All papers will be scored based on a retroactive relevancy heuristic i.e. how useful did these papers end up being to the problems presented in this project. 
+\end{itemize}
+\begin{table} [!htb]
+\caption{Relevancy of Papers}
+\centering
+\begin{tabular}{l|c|c}
+Paper & Type & Score \\ 
+V. Jacobson - Networking Named Content & Analysis & 5\\
+D. Kim - Efficient and Secure NDN & Implementation & 5\\
+S. Weber - Caching & Implementation & 3\\
+K. Lei - Blockchain Based Key Management & Implementation & 5\\
+L. Zhang - Named Data Networking & Review & 4\\
+S.Nakamoto - Bitcoin & Implementation & 4 \\
+L. Zhang - NDN & Implementation & 4 \\
+K. Huang - Cyber Attack Business & Review & 3 \\  
+K. Lei - BlockNDN & Implementation & 5 \\ 
+L. Wang - NLSR & Implementation & 5 \\ 
+NFD Team - NFD Developer's Guide & Implementation & 4 \\ 
+A. Afanasyev - NDN Technical Report 9 & Implementation & 4 \\ 
+Y. Yu - NDN Delorean & Implementation & 4\\
+S. Mastorakis - Security Support in NDN & Implementation & 5\\
+Diffie \& Hellman - Privacy and Authentication & Implementation & 3 \\
+R. Merkle - Protocols for PK Cryptosystems & Review & 3 \\
+Kohnfelder - Central Authority & Implementation & 3
+
+\end{tabular}
+\end{table}
+\section{SoA}
+\subsection{Security}
+Ralph Merkle describes the problem with the classic[cit] Authenticated Public Key Distribution protocol which is used in NDN. He describes how each node in a network generate a public key and store it in a file system. If two nodes wish to agree on a common key in order to interact, they look up the Public Key portion of the other node. Then each send a \textbf{session key} encrypted with the other node's public key. Once in agreement, this key is secret and authenticated and can be used by both nodes to communicate. 
+
+The problem with this approach is that a centralized file system is a single point of failure and is prone to attack. The attacks can be one of two - the public key elements can be altered in the file system(e.g. the attacking node could set another node's public key to be its own), and secondly, the private keys can be lost.
+
+ The alternative to this approach is implemented in NDN and it is to introduce Certificates and a Certificate Authority(CA). Certificates refer to the binding of a node's keys to its identity i.e. which key belongs to which node. It is very important that there is a robust method of determining this key-identity bond and perhaps even more importantly, to ensure that it is immutable. "In NDN, every entity that produces data needs to obtain an NDN certificate to prove the ownership of its namespace and cryptographic materials(public key)"[spyridon].
+ The security process occurs as following: Firstly, as expected, bootstrapping occurs. This is the process of obtaining all trust anchors and certificates. In order to do this, nodes must obtain a namespace and then a certificate for that namespace from a CA that they trust.[spyridon] The order for entities receiving certificates is hierarchical. This means that if a user(entity) has obtained a certificate, it can delegate certificates to other entities within its namespace.
+ Because trust anchors are determined at the Application Layer - the only prerequisite[spyridon] for security bootstrapping is allocating names. As long as an entity has a name, it can receive a certificate if allowed by the owner of the namespace. 
+ Each entity has its own trust anchors but should naturally trust the Certificate Authority. In the case of the root namespace - that is the recognized CA by the root user, as for the rest of the names in the namespace, that is the root namespace.
+ \textbf{NDNCERT} is a library found in NDN-CXX which provides the tools necessary for a name to obtain a certificate in an NDN network. It generates certificates for trust anchors automatically and manages them in a daemon[spyridon]. It runs in an instance called an agent and maintains all certificates generated by NDNCERT.
+ Data packets are signed at creation time[spyridon]. This design choice is critical in the integrity of data packets in NDN because this means that a data packet physically cannot be sent off without being signed. The important bit here isn't so much that all data sent is signed as much as the inverse - that all data received can be checked for a signature. As well as that NDNCERT can revoke certificates automatically if they are considered unfit. There is a check done on each certificate and if it is generated illegally, then in the case of the MiniNDN emulator, the code will throw an error and exit the session.
+ The Achilles Heel of any Security Protocol is bootstrapping.[hristov]
+
+
+\section{Literary Review}
+This section has been divided in the different technical components that I've investigated as part of my FYP. Apart from being split into NDN and Blockchain, I've also split NDN into: Security, NFD, NLSR, Mini-NDN, Content Store.
+
+\subsection{Security}
+[Kim15]Efficient and Secure NDN by D. Kim - 2015 Seventh International Conference on Ubiquitous and Future Networks, pp. 118-120, Tokyo, Japan. 7-10 July 2015.
+
+This paper is important to my State of the Art review because it clearly outlines the current security challenges in Named Data Networks. It suggests a new way of implementing security protocols which currently are only implemented at the application layer and aren’t enforced. Because checking for which packets are signed at each packet transfer becomes recursive and very slow for any reasonable size transfer, this paper recommends only checking for signed data at critical points, incurring a smaller overhead on data transfer. This paper also presents an experiment on speeding up NDN by bundling Interest requests instead of burst firing interests for each packet. The paper concludes that this technique is upper-bounded by a $2^{\frac{1}{2}n}$ bundle size, yet delivers tremendous speed-ups in interests where the number of segments is larger than 4096.
+
+\subsection{Overview}
+[Jacobson09] Networking Named Content by Van Jacobson, D.K. Smetters, James D. Thornton, Michael Plass, Nick Briggs, Rebecca L. Braynard - In CoNEXT '09: Proceedings of the \nth{5} International Conference on Emerging Network Experiments and Technologies. Rome, Italy. 1-4 December, 2009.
+
+The Van Jacobson paper on "Networking Named Content" is relevant to my State of the Art review, because it is the first paper to describe Content Centric Networking, on which Named Data Networking is based. This paper largely follows on from Dave Clarke's work in the field of the point to point communication problem. NDN is a direct evolution of both Clarke's work and Van Jacobson's work in CCN. It is implemented in much the same way, by fundamentally using very similar routing as IP, where nodes express Interests which are logged as faces in FIB tables for each NDN node, and are returned with a single Data packet over the shortest available path. "CCN is a networking architecture built on IP's engineering principles, but using named content rather than host identifiers as its central abstraction." NDN is also similar to CCN because it implements its 'soft state' model - meaning an expressed interest that isn't consumed by  a Data packet is timed out, therefore the machine expressing an Interest must re-express that interest if it still requires the data. In conclusion, this paper is the foundation of Named Data Networking, which carries over many of the proposed features in CCN in its State of the Art form, including its Node Model, Transport, Sequencing, Routing and Security.
+
+
+\subsection{Content Store}
+[Weber14]A Survey of Caching Policies and Forwarding Mechanisms in Information-Centric Networks by S. Weber, A. Ioannou - \nth{39} Annual IEEE Conference on Local Computer Networks. Edmonton, Canada, 8-11 September 2014.
+
+The paper on Caching Policies and Forwarding Mechanisms was relevant to my work because it described in detail the current SOA of caching policies. As a survey, the paper outlines how currently the FIX(0.9), DC and ProbeCache are the best performers. However, none of these algorithms implement content popularity as a heuristic, the importance of which is proven and cited in the text. The results from the experiment that simulates different caching techniques show that Prob-PD shows very promising but very workload-dependant results, concluding that there’s plenty of work to be done on the SOA of ICN caching. This paper was also useful as it gave suggestions for different topologies that might be used to test NDN functionality, for example having a 5 level binary tree with the root being the only initial content source with 1000 contents. 
+\\
+
+
+[Lei18] A Blockchain-based Key Management Scheme for Named Data Networking by K. Lei, J. Lou, Q. Zhang, Z. Qi. Proceedings of the \nth{1} 2018 IEEE International Conference on Hot Information-Centric Networks(HotICN 2018). August 2018.
+
+This paper was very relevant to my project as its research and work closely resembles my ideas of what my project should look like. It outlines a specific approach to the distributed ledger problem which isn't normally observed in PKI system. This paper suggests that instead of a root block(or genesis block), to instead have the incumbent nodes in the network come to a consensus on user validation. This is done through an authentication transaction where the user sends the network their public key time and version stamped. The network reaches a consensus and if the block with the user's public key is recorded, they are returned with a ${<}Block Height{>}$ and a ${<}Transaction Hash{>}$ to signify that they've been accepted.
+
+
+\section{Blockchain}
+\subsection{Overview Paper}
+[Budish18]  The Economic Limits of Bitcoin and Blockchain by E. Budish. The University of Chicago Booth School of Business. 5 June 2018.
+
+
+This paper by itself offered very little in terms of insight for my project - i.e. the SOA of Blockchain or how to implement it in my project. However, this paper pointed me to some of the key and most important resources when researching blockchain such as Nakamoto’s “Bitcoin: A Peer-to-Peer Electronic Cash System” paper. 
+
+[Nakamoto10] Bitcoin: A Peer-to-Peer Electronic Cash System, https://www.bitcoin.org
+
+The Nakamoto paper is the paper which defined Bitcoin. It goes into great detail about the concept behind 
+
+\subsection{Value Chain}
+[K. Huang] Systematically Understanding the Cyber Attack Business: A Survey by Keman Huang, Michael Siege and Stuart Madnick, MIT 
+
+This paper describes in depth the current landscape of cyber attacks and their prevention as a service. 
+

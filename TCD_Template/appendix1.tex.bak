@@ -1,0 +1,35 @@
+\chapter{Abbreviations}
+
+\begin{longtable}{p{40mm}|p{100mm}}
+	\textbf{Short Term}&\textbf{Expanded Term}\\
+	\hline
+	CA & Central Authority\\
+	DNS & Domain Name System\\
+	ACK & Packet Acknowledgement \\ 
+	IoT & Internet of Things \\  
+	URI & Universal Resource Indicator \\  
+	ICN & Infomration Centric Networks\\ 
+	NDN & Named Data Networking \\ 
+	CCN & Content Centric Networking\\ 
+	NDN-CXX & C++ Library with eXperimental eXtensions \\ 
+	NFD & Named Data Forwarding Daemon \\ 
+	NLSR & Named Data Link State Routing \\ 
+	LSA & Link State Advertisement \\ 
+	HR & Hyperbolic Routing \\  
+	Face & Interface(Physical/Logical)\\ 
+	FIB & Forward Interest Base \\ 
+	CS & Content Store(Cache) \\ 
+	PIT & Pending Interest Table \\ 
+	PIB & Public Information Base \\ 
+	RIB & Routing Information Base \\ 
+	PKI & Public Key Infrastructure \\ 
+	TPM & Trusted Platform Module \\ 
+	TLV & Type Length Value Encoding \\ 
+	TCP & Transmission Control Protocol \\ 
+	IP & Internet Protocol  \\ 
+	DHCP & Dynamic Host Configuration Protocol \\ 
+	ARP & Address Resolution Protocol \\ 
+	DNS & Domain Name System \\ 
+	MAC & Media Access Control \\ 
+	RTT & Round Trip Time \\ 
+\end{longtable}

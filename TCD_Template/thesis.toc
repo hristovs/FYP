@@ -1,0 +1,36 @@
+\contentsline {chapter}{Acknowledgments}{iii}% 
+\contentsline {chapter}{Abstract}{iv}% 
+\contentsline {chapter}{List of Tables}{viii}% 
+\contentsline {chapter}{List of Figures}{ix}% 
+\contentsline {chapter}{Chapter{} \numberline {1}Introduction}{1}% 
+\contentsline {section}{\numberline {1.1}Motivation}{2}% 
+\contentsline {section}{\numberline {1.2}Aims}{2}% 
+\contentsline {section}{\numberline {1.3}Road-map}{2}% 
+\contentsline {chapter}{Chapter{} \numberline {2}State of the Art}{4}% 
+\contentsline {section}{\numberline {2.1}{Introduction}}{4}% 
+\contentsline {section}{\numberline {2.2}Background and Summary}{5}% 
+\contentsline {section}{\numberline {2.3}SoA}{6}% 
+\contentsline {subsection}{\numberline {2.3.1}Security}{6}% 
+\contentsline {section}{\numberline {2.4}Literary Review}{8}% 
+\contentsline {subsection}{\numberline {2.4.1}Security}{8}% 
+\contentsline {subsection}{\numberline {2.4.2}Overview}{8}% 
+\contentsline {subsection}{\numberline {2.4.3}Content Store}{9}% 
+\contentsline {section}{\numberline {2.5}Blockchain}{10}% 
+\contentsline {subsection}{\numberline {2.5.1}Overview Paper}{10}% 
+\contentsline {subsection}{\numberline {2.5.2}Value Chain}{11}% 
+\contentsline {chapter}{Chapter{} \numberline {3}Design and Implementation}{12}% 
+\contentsline {section}{\numberline {3.1}Introduction}{12}% 
+\contentsline {section}{\numberline {3.2}The Development Platform}{12}% 
+\contentsline {subsection}{\numberline {3.2.1}MiniNDN}{12}% 
+\contentsline {section}{\numberline {3.3}The Data Structure}{14}% 
+\contentsline {subsection}{\numberline {3.3.1}Public Information Base Block}{14}% 
+\contentsline {subsection}{\numberline {3.3.2}Public Information Base Blockchain}{15}% 
+\contentsline {chapter}{Chapter{} \numberline {4}Design}{19}% 
+\contentsline {chapter}{Chapter{} \numberline {5}Simulations}{20}% 
+\contentsline {chapter}{Chapter{} \numberline {6}Results}{21}% 
+\contentsline {section}{\numberline {6.1}Ideal Evaluation}{21}% 
+\contentsline {subsection}{\numberline {6.1.1}Overhead and Latency}{21}% 
+\contentsline {section}{\numberline {6.2}Discussion}{21}% 
+\contentsline {chapter}{Chapter{} \numberline {7}Conclusions}{22}% 
+\contentsline {chapter}{Appendix{} \numberline {A}Abbreviations}{23}% 
+\contentsline {chapter}{Bibliography}{25}% 

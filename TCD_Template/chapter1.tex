@@ -1,0 +1,29 @@
+\chapter{Introduction}
+Named Data Networking is an interesting new paradigm in the space of network architectures. Years on since Bell Labs' work on telephony, networking research assumed that telephony is the right model for data networking[1]. This model implied that there had to be a determined route between two points for communication to happen - the setup for which was costly. This was proven not to be the case in Paul Baran's research paper titled "On Distributed Communication Networks" in 1964, which was widely disregarded until the practical application of his work in ARPAnet(Sept,'71).MIT Senior Researcher David Clark's paper on end-to-end principle confirmed the same and it became apparent that networking solved the telephony problem. However, we are still using this same architecture which was invented as a solution for a problem of 5 decades ago, and the Internet of today is not facing the same challenges. 
+
+This is why, in the age of content delivery, Named Data Networking and other Information Centric Networking architectures aim to move away from the source-destination pairwise method of IP communication which is inherently limited. Instead, NDN proposes a Name-based approach where each node in a network can require content based on the name of the piece of data it requires. 
+
+This project aims to improve on the security implemented in Named Data Networking.
+
+
+The aim of this introduction is to give background for motivation as well as lay out the structure of this paper.
+\section{Motivation}
+Traditional NDN: The traditional NDN architecture presents a security architecture not dissimilar to the Central Authority architecture conceptualized by Loren Kohnfelder in 1978[cit]. It provides a public file[cit] system where all nodes can check the entries for other nodes issued by a Central Authority which signs each entry(certificate). 
+
+\section{Aims}
+Instead of transactions, this project aims to store certificates in a similar fashion. The goal is to do so efficiently, without increasing computational load on individual nodes in the system or increasing significantly the bandwidth use.
+
+ It is important to note that there isn't a monetary incentive for doing this "Proof-of-Work"[2] so each network should have a dedicated group of miners which verify blocks. The assumption here is that all(or most) of the nodes will not be malicious and will not be pooling their resources to attack the network. This means that in order for one to alter the list of certificates, they would have to have more computing power than the entire network of miners. This will allow for safer communication between nodes in a network. 
+
+\section{Road-map}
+The chapter so far has introduced the project. The following paragraph aims to outline the structure and purpose of the rest of the chapters.
+
+This paper is structured as follows: State of the Art(Lit. Review), Design and Implementation, and Evaluation.
+\begin{itemize}
+\item Chapter 2 contains the literary reviews of the papers which discuss the State of the Art. It looks at a ranking system for the papers reviewed and also provides critique for each one. 
+
+\item Chapter 3 discusses in detail the design and implementation of the Blockchain solution in NDN. It outlines all aspects of the practical work, including solutions, design challenges and alterations that were made along the way.
+
+\item Chapter 4 goes on to evaluate the working solution by discussing different experiments and topologies. It presents graphs which illustrate the performance differences in different topologies
+\end{itemize}
+The paper's conclusion then sums up the work that's been presented and outlines any future work that might be undertaken regarding the project.
