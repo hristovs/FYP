@@ -172,7 +172,9 @@ distribute these to nodes for inclusion into the Blockchain. Nodes have
 access to the current set of certificates through their Blockchain and 
 can verify content through these certificates.
 
-NDN currently implements a signature verification standard by defining a common certificate format. All signed data transfers in NDN are certificates because they contain a public key.X509 Format.
+NDN currently implements a signature verification standard by using the standard X.509 Format for certificates. Certificates represent the validity of a public key that has been used to sign a piece of data. All Data packets in NDN are issued certificates. These certificates are stored in the PIB.
+
+This paper recommends the additional hashing of these certificates in a Blockchain to improve security and reduce look-ups for each node in an NDN network when receiving Data packets.
 \end{thesisabstract}
 
 \tableofcontents                                  %% Generate table of contents.
@@ -187,8 +189,6 @@ NDN currently implements a signature verification standard by defining a common 
   \include{chapter3}
   \include{chapter4}
   \include{chapter5}
-  \include{chapter6}
-  \include{chapter7}
 
 
 %\addcontentsline {toc}{chapter}{Appendices}       %% Force Appendices to appear in contents

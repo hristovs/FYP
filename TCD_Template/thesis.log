@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7000 64-bit) (preloaded format=pdflatex 2019.4.5)  16 APR 2019 23:38
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7000 64-bit) (preloaded format=pdflatex 2019.4.5)  17 APR 2019 20:11
 entering extended mode
 **./thesis.tex
 (thesis.tex
@@ -222,7 +222,7 @@ Package: longtable 2014/10/28 v4.11 Multi-page Table package (DPC)+ FMi change
 \LT@p@ftn=\toks22
 ) (thesis.aux
 (chapter1.aux) (chapter2.aux) (chapter3.aux) (chapter4.aux) (chapter5.aux)
-(chapter6.aux) (chapter7.aux) (appendix1.aux))
+(appendix1.aux))
 \openout1 = `thesis.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 125.
@@ -334,22 +334,22 @@ Underfull \hbox (badness 10000) in paragraph at lines 144--144
 
 ] [5] (thesis.toc [6
 
-])
+] [7])
 \tf@toc=\write3
 \openout3 = `thesis.toc'.
 
- [7] (thesis.lot)
+ [8] (thesis.lot)
 \tf@lot=\write4
 \openout4 = `thesis.lot'.
 
- [8
+ [9
 
 
 ] (thesis.lof)
 \tf@lof=\write5
 \openout5 = `thesis.lof'.
 
- [9
+ [10
 
 
 ]
@@ -361,14 +361,14 @@ Chapter 1.
 [1
 
 
-]
+] [2]
 LaTeX Font Info:    Try loading font information for OMS+cmr on input line 23.
  ("C:\Program Files\MiKTeX 2.9\tex/latex/base\omscmr.fd"
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 23.
- [2]) [3]
+) [3]
 \openout2 = `chapter2.aux'.
 
 
@@ -398,61 +398,98 @@ Underfull \hbox (badness 10000) in paragraph at lines 18--19
 
  []
 
-[5] [6] [7] [8] [9] [10]
-Overfull \hbox (3.50124pt too wide) in paragraph at lines 110--111
+[5]
+<hashes.png, id=60, 605.26125pt x 308.95425pt>
+File: hashes.png Graphic file (type png)
+<use hashes.png>
+Package pdftex.def Info: hashes.png  used on input line 53.
+(pdftex.def)             Requested size: 433.62pt x 221.34375pt.
+
+Overfull \hbox (11.36218pt too wide) in paragraph at lines 58--58
+\OT1/cmr/m/n/12 Named Data Net-work-ing be-gan life in 2010 un-der the NSF's Fu
+-ture In-ter-net Architecture[cit-
+ []
+
+[6]
+<hourglass.png, id=64, 1027.84pt x 513.92pt>
+File: hourglass.png Graphic file (type png)
+<use hourglass.png>
+Package pdftex.def Info: hourglass.png  used on input line 62.
+(pdftex.def)             Requested size: 433.62pt x 216.80946pt.
+ [7 <./hashes.png>] [8 <./hourglass.png>] [9] [10] [11] [12] [13]
+Overfull \hbox (5.81363pt too wide) in paragraph at lines 132--133
+\OT1/cmr/m/n/12 Yan-biao Li, Lixia Zhang, Eric New-berry, Zhiyi Zhang, Haiteao 
+Zhang, Alexan-der Afanasyev
+ []
+
+[14] [15]
+Overfull \hbox (3.50124pt too wide) in paragraph at lines 152--153
 \OT1/cmr/m/n/12 [Weber14]A Sur-vey of Caching Poli-cies and For-ward-ing Mech-a
 -nisms in Information-Centric
  []
 
-[11]
-Underfull \hbox (badness 10000) in paragraph at lines 112--114
+[16]
+Underfull \hbox (badness 10000) in paragraph at lines 154--156
 
  []
 
-[12]
-Overfull \hbox (8.66231pt too wide) in paragraph at lines 128--129
+[17]
+Overfull \hbox (8.66231pt too wide) in paragraph at lines 170--171
 []\OT1/cmr/m/n/12 [Nakamoto10] Bit-coin: A Peer-to-Peer Elec-tronic Cash Sys-te
 m, https://www.bitcoin.org 
  []
 
-) [13]
+) [18]
 \openout2 = `chapter3.aux'.
 
  (chapter3.tex
 Chapter 3.
-[14
+[19
 
 
 
-]
-<minindn.png, id=88, 513.71925pt x 262.581pt>
+] [20]
+<minindn.png, id=115, 513.71925pt x 262.581pt>
 File: minindn.png Graphic file (type png)
 <use minindn.png>
-Package pdftex.def Info: minindn.png  used on input line 26.
+Package pdftex.def Info: minindn.png  used on input line 33.
 (pdftex.def)             Requested size: 433.62pt x 221.65231pt.
- [15] [16 <./minindn.png>] [17]
-<pibblockchain.png, id=101, 875.6715pt x 433.01775pt>
+ [21] [22 <./minindn.png>] [23]
+<pibblockchain.png, id=126, 875.6715pt x 433.01775pt>
 File: pibblockchain.png Graphic file (type png)
 <use pibblockchain.png>
-Package pdftex.def Info: pibblockchain.png  used on input line 53.
+Package pdftex.def Info: pibblockchain.png  used on input line 60.
 (pdftex.def)             Requested size: 433.62pt x 214.42703pt.
- [18]
-Underfull \hbox (badness 10000) in paragraph at lines 63--65
+ [24 <./pibblockchain.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 70--72
 
  []
 
-[19 <./pibblockchain.png>]
-<NDN.png, id=108, 1386.17876pt x 1062.97125pt>
+[25]
+<NDN.png, id=133, 1386.17876pt x 1062.97125pt>
 File: NDN.png Graphic file (type png)
 <use NDN.png>
-Package pdftex.def Info: NDN.png  used on input line 73.
+Package pdftex.def Info: NDN.png  used on input line 81.
 (pdftex.def)             Requested size: 433.62pt x 332.51831pt.
-) [20 <./NDN.png>]
+ [26 <./NDN.png>]
+<comms.png, id=139, 536.60475pt x 149.358pt>
+File: comms.png Graphic file (type png)
+<use comms.png>
+Package pdftex.def Info: comms.png  used on input line 88.
+(pdftex.def)             Requested size: 433.62pt x 120.69443pt.
+ [27 <./comms.png>]
+<signedinterest.png, id=143, 614.295pt x 62.2325pt>
+File: signedinterest.png Graphic file (type png)
+<use signedinterest.png>
+Package pdftex.def Info: signedinterest.png  used on input line 103.
+(pdftex.def)             Requested size: 433.62pt x 43.92899pt.
+ [28]) [29 <./signedinterest.png>]
 \openout2 = `chapter4.aux'.
 
- (chapter4.tex
+
+(chapter4.tex
 Chapter 4.
-) [21
+) [30
 
 
 
@@ -461,25 +498,7 @@ Chapter 4.
 
  (chapter5.tex
 Chapter 5.
-) [22
-
-
-
-]
-\openout2 = `chapter6.aux'.
-
- (chapter6.tex
-Chapter 6.
-) [23
-
-
-
-]
-\openout2 = `chapter7.aux'.
-
- (chapter7.tex
-Chapter 7.
-) [24
+) [31
 
 
 
@@ -488,37 +507,36 @@ Chapter 7.
 
  (appendix1.tex
 Appendix A.
-[25
+[32
 
 
 
-]) [26] (biblio.tex) [27
+]) [33] (biblio.tex) [34
 
 
 ] (thesis.aux (chapter1.aux) (chapter2.aux)
-(chapter3.aux) (chapter4.aux) (chapter5.aux) (chapter6.aux) (chapter7.aux)
-(appendix1.aux)) ) 
+(chapter3.aux) (chapter4.aux) (chapter5.aux) (appendix1.aux)) ) 
 Here is how much of TeX's memory you used:
- 3121 strings out of 492945
- 42976 string characters out of 3135514
- 124653 words of memory out of 3000000
- 6891 multiletter control sequences out of 15000+200000
+ 3125 strings out of 492945
+ 42844 string characters out of 3135514
+ 124047 words of memory out of 3000000
+ 6905 multiletter control sequences out of 15000+200000
  11094 words of font info for 39 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  41i,9n,35p,1335b,249s stack positions out of 5000i,500n,10000p,200000b,50000s
-<C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/c
-mbx12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmcsc10.p
-fb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/P
-rogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Program Fi
-les/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTe
-X 2.9/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Program Files/MiKTeX 2.9/fon
-ts/type1/public/amsfonts/cm/cmr6.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/p
-ublic/amsfonts/cm/cmsl12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/am
-sfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/c
-m/cmti12.pfb>
-Output written on thesis.pdf (37 pages, 346451 bytes).
+<C:/Program File
+s/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Files/MiKTeX
+ 2.9/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><C:/Program Files/MiKTeX 2.9/fo
+nts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type
+1/public/amsfonts/cm/cmmi8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/
+amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/
+cm/cmr17.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr6.p
+fb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsl12.pfb><C:/P
+rogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program F
+iles/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti12.pfb>
+Output written on thesis.pdf (45 pages, 606336 bytes).
 PDF statistics:
- 170 PDF objects out of 1000 (max. 8388607)
+ 201 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 21 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 41 words of extra memory for PDF output out of 10000 (max. 10000000)
 

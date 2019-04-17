@@ -2,7 +2,14 @@
 \section{Introduction}
 This chapter will discuss in detail the design and implementation of the Blockchain in NDN. It will outline and justify different design choices that were made along the way and also the difficulty they presented/alleviated. 
 
-The Design is sectioned into: The Development Platform, The Data Structure and Content Delivery, which will be discussed in that particular order.
+The Design is sectioned into: The Problem, The Development Platform, The Data Structure and Content Delivery, which will be discussed in that particular order.
+\section{The Problem}
+The particular issue that this project concerns itself with is the security protocol. In particular, in the previous chapter, it was described that the current implementation relies on the CA method described by Kohenfelder in his B.Sc. dissertation and improved upon by Merkle's tree authentication[merkle]. \par
+Despite efforts made in the security of the CA and the public keys file, there hasn't been much regard for the efficiency of the network when it comes to security. There are two problems that this project aims to address: \begin{itemize}
+
+\item reduce lookups in the Public Information Base - alleviating the time constraint in having to request that information and go through it.
+\item to increase the Public Information Base's integrity - by hashing every certificate to each other, and having those hashes be verified by miners authorized by the central authority. The result of this is that it is now exponentially harder for an attacker to compromise the PIB, by virtue of Blockchain \textbf{and also} because the PIB is now no longer the only point of failure.
+\end{itemize}
 \section{The Development Platform}
 \subsection{MiniNDN}
 There are a number of tools which can be used to experiment with NDN. These are the following: ndnSIM, Docker and MiniNDN.
@@ -66,11 +73,36 @@ Of course this doesn't mean that there isn't a concern about which blocks go in 
 
 Now that the allocation of PibBlocks to PibBlockchains was completed, and there were no longer any circular dependencies allowing for the code to be added to the security code hierarchy in NDN-CXX. \par 
 
-Shortly after adding the code 
+Shortly after adding the code to the project, it became evident that the solution wouldn't work in its current form. That is because the NDN Team have developed a pretty robust automatic Certificate Authority. I found this out when I realized that my PibBlock data structure was parsing certificates being created, allocating new memory for them and then copying the certificate. The problem with this approach is that the copied certificates have not been authorised by the Certificate Authority. This is why when running the simulation, it would abruptly exit. 
 
+So instead, the PibBlock class looks to the Certificate class for inspiration. The Certificate class overloads the << operator for certs by extracting all data from them and printing it in chunks. PibBlock takes the functions used to extract data from the certificates and implements them in order to store the Certificate data in strings. Once stored, nodes can still access the signatures for each certificate in string form and verify them.
 
 \begin{figure}
 \includegraphics[width=6in]{NDN.png}
 \caption{
 NDN Components.Orange Rectangles - Intimate knowledge of modules' code required. Orange Rectangles w/ Red Frames - Modules where code was either altered or added for the scope of this project.}
 \end{figure}
+\section{Broadcasting}
+Once the data is stored in the Blockchain, the next objective was to figure out a way to disseminate it across the network. This is the most important part of the project. The reason why the Blockchain is useful is so nodes can compare certificates against it. If they can't do that because they don't have that information, then the Blockchain is useless. The reason why the solution required was non-trivial was because of the communications design in NDN. In order for nodes to communicate, they must send out an Interest - which made the tasks more difficult than anticipated. \par 
+\begin{figure}[h]
+\includegraphics[width=6in]{comms.png}
+\caption{Node Communication[A Survey of ICN - Dirk Kutscher]}
+\end{figure}
+\subsection{Naive Approach}
+The proof of concept method of broadcasting the blockchain on port (ask Stefan for port no.) utilizes, in the case of MiniNDN, the file system. The Blockchain is broadcast to all nodes via the port and appears in the temp folder for all of the nodes. This is the naive approach and it is impractical because it just blasts data at the nodes and wouldn't work in a real environment.
+
+\subsection{Reconfigure NFD approach}
+The NFD is, as mentioned in the previous chapter, how Data and Interest packets get propagated in an NDN network. While investigating different options for broadcasting, I came across the configuration file for NFD which gives the user the option to redefine all nodes' caching policies. In it, there are a couple of listed policies. One only allows Data packets to be cached for which there are expressed Interests. The other allows Data to be cached regardless of whether there's been an Interest for it. \par
+This project has explored one option for this approach. Because reconfiguring the NFD to make it so every node caches everything isn't feasible or wise, the option to create an altogether new policy was explored. However, there wasn't enough time to explore this option fully.
+\subsection{Signed Interest approach}
+This is the approach which was chosen for this project. Firstly, we must define a Signed Interest. This type of Interest is the second version of what was known as a "Control Interest". These specialized Interest packets were designed for Internet Of Things applications where nodes would have to communicate and sometimes control one another and the conventional Interest-Data packet communication didn't allow for this.\par
+
+In a control system where a thermometer node has to tell a WiFi connected HVAC the temperature, so it can adjust accordingly, the conventional system leads to a paradox. This is because the thermometer node cannot simply send a Data packet to the HVAC, giving it the temperature, because this Data packet would be unsolicited. Also, it is not feasible to set up the HVAC to flood the network with temperature Interest packets at all times because this creates unnecessary strain on the network. It would be quite pointless to send out Interests(polling) at a random or set interval as well, as in most environments, temperature change doesn't happen at set intervals. This could make for an ineffective temperature control system if the temperature has changed from the desired temperature but the HVAC isn't due to poll the thermometer for a prolonged amount of time. \par 
+Instead, the thermometer node sends a "Control Interest"(now deprecated and known instead as a Signed Interest) where it tells the HVAC to ask for the temperature reading.\par 
+\begin{figure}
+\includegraphics[width=6in]{signedinterest.png}
+\caption{Signed Interest}
+\end{figure}
+We are met with a near identical situation. We have miners which need to broadcast a Blockchain to all nodes in a network. One approach could be to ensure that nodes request an updated Blockchain every time that they receive a Data packet. However, the delay from doing this would render the solution pointless and would provide little benefit in terms of a speed-up compared to the regular PIB look-up that nodes do(it would still improve on the single point of failure problem). So instead, when the miner verifies a new Certificate in the Blockchain, it sends out a Signed Interest to all nodes, to get them to request the information(Express an Interest) for the updated Blockchain. \par
+
+The nodes in the network would have an InterestFilter which will verify 

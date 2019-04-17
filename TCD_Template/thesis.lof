@@ -1,11 +1,13 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Blockchain structure[satoshi]}}{7}% 
+\contentsline {figure}{\numberline {2.2}{\ignorespaces The Networking Stack}}{8}% 
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces Basic MiniNDN architecture}}{16}% 
-\contentsline {figure}{\numberline {3.2}{\ignorespaces This figure shows how PibBlockchain interacts with NDN and the std library}}{19}% 
-\contentsline {figure}{\numberline {3.3}{\ignorespaces NDN Components.Orange Rectangles - Intimate knowledge of modules' code required. Orange Rectangles w/ Red Frames - Modules where code was either altered or added for the scope of this project.}}{20}% 
-\addvspace {10\p@ }
-\addvspace {10\p@ }
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Basic MiniNDN architecture}}{22}% 
+\contentsline {figure}{\numberline {3.2}{\ignorespaces This figure shows how PibBlockchain interacts with NDN and the std library}}{24}% 
+\contentsline {figure}{\numberline {3.3}{\ignorespaces NDN Components.Orange Rectangles - Intimate knowledge of modules' code required. Orange Rectangles w/ Red Frames - Modules where code was either altered or added for the scope of this project.}}{26}% 
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Node Communication[A Survey of ICN - Dirk Kutscher]}}{27}% 
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Signed Interest}}{29}% 
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

@@ -44,10 +44,27 @@ Kohnfelder - Central Authority & Implementation & 3
 
 \end{tabular}
 \end{table}
-\section{SoA}
+\section{State of The Art - Knowledge}
+\subsection{Blockchain}
+Blockchain is a distributed ledger of immutable digital records[medium.com]. It was conceptualized in Satoshi Nakamoto's Bitcoin paper in 2009. It is the main component of the Bitcoin cryptocurrency. It allows for decentralized transactions by solving the Byzantine Generals Problem[cit].\par 
+This problem refers to the inability of traditional systems, without a central authority, to determine that a certain resource hasn't been spent more than once. The reason banks or "central authorities" can vouch for transactions, and guarantee against double spending, is because the transactions don't happen instantaneously. They are each, individually confirmed, and also, should the bank make a mistake, it covers it(insurance).\par 
+The reason this isn't the case in a Blockchain distributed ledger system like Bitcoin, is because miners do Proof-of-Work on each node before verifying a transaction.
+\begin{figure}
+\includegraphics[width=6in]{hashes.png}
+\caption{Blockchain structure[satoshi]}
+\end{figure}
+
+\subsection{NDN}
+Named Data Networking began life in 2010 under the NSF's Future Internet Architecture[cit-ndn-tutorials-sigcomm17]. The leading effort in the NDN project has been UCLA Professor Lixia Zhang. Projects like NDN picked up traction after CCN began development at PARC, headed by Van Jacobson. NDN presents a paradigm shift for the Networking Stack. Instead of IP being the thin-waist of the stack, NDN suggests a data name abstraction, where the name of the content becomes this thin-waist. \par
+NDN is composed of a number of modules described below. It is a name based architecture where nodes in a network can request data, not based on where it comes from but based on the name of the data. I.e. a node requests /ndn/a-site/important/information instead of an IP address. This abstraction is hugely advantageous in today's Internet where content sharing is at the forefront of what the Internet delivers. NDN allows for nodes to respond to content requests(Interests) with Data packets. Nodes interact by sending Interests by Name. Data is retrieved in Data packets.\par 
+\vfill
+\begin{figure}
+\includegraphics[width=6in]{hourglass.png}
+\caption{The Networking Stack}
+\end{figure}
 \subsection{Names}
 An NDN Name is a hierarchical name for NDN content, which contains a sequence of name components.[named-data.net docs] Each NDN name component  consists of variable lengths and is separated by a '/' separator. This design is advantageous because it is human readable and allows for users to configure Interest and Data filters using regular expressions. \\
-E.g: InterestFilter$(\^<ndn><lectures>)$ means listen for any interests beginning with /ndn/lectures. 
+E.g: InterestFilter$(^<ndn><lectures>)$ means listen for any interests beginning with /ndn/lectures. 
 Named Data Networking is all about names. When presenting on NDN at MILCOM 2017 in Baltimore, Lixia Zhang said "the secret to NDN is in the names!" This is because this networking paradigm  is entirely centered on the names of content. Each entity in a network has an identity, and each identity has a name. Each named entity in a network follows a hierarchical naming scheme.\par
 Names are represented by the name class in NDN. They are made up by a URI string. In C++, they are defined using the C-style const char* array. \par
 Packets are forwarded using Longest Name Prefix Matching(LNPM).[Yuan] 
@@ -60,18 +77,19 @@ If the router was to look-up 192.168.20.19, both entries will "match", but the r
 
 A similar example could be given an Interest arriving at node B asking for /ndn/a-site/lectures/telecomms/slides  and node B's FIB could have entries for /ndn/a-site and /ndn/a-site/lectures/telecomms/ in which case it will only return the second entry. \par 
 
-The problem with LNPM comes from the inherent differences between address lengths in IP and NDN. In most cases, NDN names will be longer than IP as the namespace is unbounded. This is why NDN employs two techniques proposed in a Washington University paper by Haowei Yuan and Patrick Crowley. The first changes the LNPM design to a binary search of hash tables reducing lookups to O(log(k)) for prefixes with k components [yuan] and the second technique is level pulling to improve the average case. This makes the name prefix lookup solution scalable - a necessary feature for the NDN architecture to work. 
+The problem with LNPM comes from the inherent differences between address lengths in IP and NDN. In most cases, NDN names will be longer than IP as the namespace is unbounded. The difference in size is so drastic, that TCAM or SRAM memory modules for the FIB would not be large enough if the number of rules is large. The NDN FIB has to use DRAM in order to accommodate for this size difference. With such a difference in size and complexity, look-ups can take O(k) string look-ups[yuan].\par 
+This is why NDN employs two techniques proposed in a Washington University paper by Haowei Yuan and Patrick Crowley. The first changes the LNPM design to a binary search of hash tables reducing lookups to O(log(k)) for prefixes with k components [yuan] and the second technique is level pulling to improve the average case. This makes the name prefix lookup solution scalable - a necessary feature for the NDN architecture to work. 
 
 \subsection{NFD}
-Named Data Forwarding Daemon is..
+Named Data Forwarding Daemon is responsible for handling all packets in the network. An instance of NFD runs on every node in a network. When a packet arrives the NFD checks if that packet is destined for the particular node and if not it discards it based on a policy to allow/disallow unsolicited Data packets.
 \subsection{NLSR}
-Named Data Link State Routing is...
+Named Data Link State Routing is the NDN module which deals with routing when a topology is created. NLSR works by sending out Link State Advertisements when a network is created. What this means is that, each node has its Forwarding Interest Base populated with adjacent nodes. NLSR takes time to converge proportional to CPU power in the Network. 
 \subsection{Chronosync}
-Chronosync is.....
+Chronosync is a module used when there is a need for nodes to receive data or be updated at the same time. Chronosync runs on top of NFD and synchronizes Data and Interest packet sending and receiving.
 \subsection{Content Store}
-The Content Store or cache is each node's local storage. It contains signed Data which the node can forward to any node expressing an interest for it. Caching is one of NDN's main features.
+The Content Store or cache is each node's local storage. It contains signed Data which the node can forward to any node expressing an interest for it. Caching is one of NDN's main features. There are two types - off path and on path caching. Off path caching, like the name suggests, disregards content path and just aims to replicate the content in a network[weber, ioannou]. On Path caching is limited to the content propagated along the delivery path[weber,ioannou] meaning the data cannot be cached outside the route from the node expressing the Interest for the Data and the producer of said Interest.
 \subsubsection{Policies}
-A number of policies exist for caching....
+A number of policies exist for caching:FIX(0.9), DC and ProbeCache. A recent solution - ProbPD investigates content popularity as a heuristic for caching. All of the high-end solutions perform near identically.
 \subsection{Security}
 Ralph Merkle describes the problem with the classic[cit] Authenticated Public Key Distribution protocol. He describes how each node in a network generates a public key and stores it in a file system. If two nodes wish to agree on a common key in order to interact, they look up the Public Key portion of the other node. Then each send a \textbf{session key} encrypted with the other node's public key. Once in agreement, this key is secret and authenticated and can be used by both nodes to communicate. 
 
@@ -91,14 +109,38 @@ Data packets are signed at creation time[spyridon]. This design choice is critic
 
 This makes Data verification twofold: Firstly, NDN uses Trust Anchors - so if a node is expecting data, it can define a trust anchor that states that the data can only arrive from one particular \textbf{name}. Secondly, and this is the traditional, cryptographic verification method, once the Data packet is received and passes the trust anchor check, the consumer of the Data packet retrieves the corresponding certificate for the producer which is identified by the key name section in the packet[spyridon]. The Certificate will then recursively point to the root certificate and if all certificates along the way are valid that means that the Data packet itself is signed with a valid signature.
 
+\section{Related Work}
+There are a number of papers that I've come across that deal with security in NDN. As expected, there is plenty of work done in this field because it is a major concern for any network architecture.\par 
 
+The NDN guides were a big help when it came to researching security. Spyridon Mastorakis' paper on NDN Security Support outlines all major features found in the Security module of NDN. This paper cited the Merkle paper on Public Key Distrtibution with Tree Authentication which is what is currently used in NDN.\par
+
+
+
+However, when it came to Blockchain integration in NDN, there wasn't much work done in the field. Hashing, on one hand, is a big part of NDN security because of the size of NDN Names as described above. To this degree, much of Ralph Merkle's work has been employed in NDN, but the Blockchain concept in general isn't seen much. 
+
+There is one particular paper titled BlockNDN by Kai Lei which describes a Blockchain abstraction for use in IP using multicast. This paper investigated whether Blockchain is a good fit for NDN and although it did not present a security solution involving Blockchain, this investigation was very useful when designing the solution for this paper.\par
+
+Another related solution which I used for some of its ideas was Alexander Afanasyev's paper titled NDNDelorean. This paper introduced a version concept for old data that needed to be authenticated. The version concept is quite useful when it comes to certificates. Because certificates can become invalid, it is important to be able to invalidate them. The problem with the Blockchain approach is that once appended to the Blockchain, a certificate can never be deleted without altering the whole Blockchain, which would render the whole Blockchain invalid. This is why, instead we introduce "version control" which in this project's case involves a simple integer(which could also be a boolean) which keeps track of a block's certificate's version. The current version is 1 if valid and 0 if invalid.
 \section{Literary Review}
 This section has been divided in the different technical components that I've investigated as part of my FYP. Apart from being split into NDN and Blockchain, I've also split NDN into: Security, NFD, NLSR, Mini-NDN, Content Store.
 
 \subsection{Security}
 [Kim15]Efficient and Secure NDN by D. Kim - 2015 Seventh International Conference on Ubiquitous and Future Networks, pp. 118-120, Tokyo, Japan. 7-10 July 2015.
 
-This paper is important to my State of the Art review because it clearly outlines the current security challenges in Named Data Networks. It suggests a new way of implementing security protocols which currently are only implemented at the application layer and aren’t enforced. Because checking for which packets are signed at each packet transfer becomes recursive and very slow for any reasonable size transfer, this paper recommends only checking for signed data at critical points, incurring a smaller overhead on data transfer. This paper also presents an experiment on speeding up NDN by bundling Interest requests instead of burst firing interests for each packet. The paper concludes that this technique is upper-bounded by a $2^{\frac{1}{2}n}$ bundle size, yet delivers tremendous speed-ups in interests where the number of segments is larger than 4096.
+This paper is important to my State of the Art review because it clearly outlines the current security challenges in Named Data Networks. It suggests a new way of implementing security protocols which currently are only implemented at the application layer and aren’t enforced. Because checking for which packets are signed at each packet transfer becomes recursive and very slow for any reasonable size transfer, this paper recommends only checking for signed data at critical points, incurring a smaller overhead on data transfer. This paper also presents an experiment on speeding up NDN by bundling Interest requests instead of burst firing interests for each packet. The paper concludes that this technique is upper-bounded by a $2^{\frac{1}{2}n}$ bundle size, yet delivers tremendous speed-ups in interests where the number of segments is larger than 4096.\par
+
+[Mastorakis18] Security Support in Named Data Networking by Spyridon Mastorakis, Yanbiao Li, Lixia Zhang, Eric Newberry, Zhiyi Zhang, Haiteao Zhang, Alexander Afanasyev - NDN Technical Report, NDN-0057.
+
+This paper was excellent for giving insight into NDN security. It described an implementation for NDNFit - an app which is designed to run on a user's phone or "data-collector". The user authenticates the collector to gather information, and then to encrypt and send that information to the user's laptop or "analyzer". The point of this implementation was the creation of a hierarchical trust model which employs not only cryptology but NDN's trust anchors to implement network security. The paper was very thorough in describing how a central authority(CA) authenticates certificates. It gives the NDNCERT library as an example of an authority which automatically verifies namespaces and trust anchors and signs certificates. Overall, this paper was extremely relevant to my work and very insightful into NDN security.
+
+[Kohnfelder78] Towards a Practical Public-Key Cryptosystem - Loren Kohnfelder - MIT B.Sc. Dissertation
+
+Despite the age of this paper, Kohnfelder gives a great overview of cryptographic techniques still used in cryptography today. Apart from his own contribution to the world of networking security, he also outlines mathematically, methods for encoding and decoding using cryptographic keys given in RSA, Diffie Hellman and Merkle. Most importantly though, in this paper, he introduces the concept of the certificate. It is this paper that recognizes the importance of a Certificate Authority, which is authorised to keep track and maintain a list of certificates(cryptographic entities) which guarantee that a a piece of content signed by a particular key is legitimately signed by that key. This sets the foundation for Merkle's paper on Certificate management.
+
+[Merkle80] Protocols for Public-Key Cryptosystems - Ralph Merkle - 1980 IEEE Sysmposium on Security and Privacy
+
+This paper is the natural evolution of the Kohnfelder paper. It also gives an overview of the broad scope of security solutions in place. Much like the Kohnfelder paper, despite its age, the techniques proposed are still in use today. Merkle describes different protocols and their benefits and drawbacks. He describes in depth: Simple Public Key Distribution, Authenticated Public Key Distribution, Public Key Distribution with Certificates, and Public Key Distribution with Tree Authentication. Merkle saw the potential of the certificates protocol and wanted to improve on it in this paper. He recognizes that despite the idea, the CA's decryption key is vulnerable to attack, which would result in system-wide loss of authentication. Merkle proposes a hashing function be used on the entire public file instead of the CA having to sign each entry in the Public File. This public file has a root which allows users in the network to use to derive the certificates. Once the nodes know the root, any attempt to alter the public file will now result in a different value for the root, which allows for easy detection. This paper directly builds on Kohnfelder's work and lays one of the foundations for network security implemented in NDN.  
+
 
 \subsection{Overview}
 [Jacobson09] Networking Named Content by Van Jacobson, D.K. Smetters, James D. Thornton, Michael Plass, Nick Briggs, Rebecca L. Braynard - In CoNEXT '09: Proceedings of the \nth{5} International Conference on Emerging Network Experiments and Technologies. Rome, Italy. 1-4 December, 2009.
@@ -132,5 +174,5 @@ The Nakamoto paper is the paper which defined Bitcoin. It goes into great detail
 \subsection{Value Chain}
 [K. Huang] Systematically Understanding the Cyber Attack Business: A Survey by Keman Huang, Michael Siege and Stuart Madnick, MIT 
 
-This paper describes in depth the current landscape of cyber attacks and their prevention as a service. 
+This paper describes in depth the current landscape of cyber attacks and their prevention as a service. It provided an overview of the cryptographic space. This was very informative as I had not dived into the world of cryptography outside of our Telecommunications modules. It was this paper that shed some light on different networking vulnerabilities and how they are tackled.
 
