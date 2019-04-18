@@ -1,5 +1,4 @@
 \chapter{State of the Art}
-\section{{Introduction}}
 The State of the Art in NDN and Blockchain was thoroughly investigated when researching this project. This was done to establish what technologies are currently implemented in Named Data Networking and also to identify similar projects to our own solution.\par It is important to note this was done to a lesser extent for Blockchain because it is a supplemental technology in the Cryptocurrency space and is relatively simplistic(i.e. a vector of blocks all hashed with the previous block's hash).The Blockchain "itself requires minimal structure"[3 - nakamoto] Therefore, the different nuances of the technology which deviate from the fundamentals weren't investigated as thoroughly as it was beyond the scope of the project specification which asked for a proof of concept Blockchain. This involves miner nodes solving basic proof of work or cryptographic puzzles[3 - nakamoto], based on a timestamped transaction, appending them to a chain, and advertising that chain to all nodes in the network. 
 
 This chapter is divided into Knowledge and Literary Review sections. The knowledge contextualizes this project by giving in depth background on all the technologies in use. 
@@ -11,43 +10,21 @@ In 2006, Van Jacobson likens the ICN solution for the IP problem to the Copernic
 
 The background for this research splits off into two parts. The Blockchain technology is largely based on cryptography and hashing. NDN on the other hand has its roots in networking. 
 
-The following table aims to quantify the usefulness of each paper that has been looked at. This method has been directly inspired by Masters student Conor Mooney who did an excellent job at scoring and qualifying his papers while researching. The categories for each paper reviewed fall under one of three categories: analysis, implementation, review.\\
-\begin{itemize}
-\item Analysis - Refers to papers which analyse a technology\\
-\item Implementation - Refers to papers which discuss technical aspects of the technologies which were used. These papers were mostly the NDN Developer Guides.\\
-\item Review - Reviews classify papers which mainly contribute with an evaluation - useful when there are different technologies that one might use for a particular problem, allowing for the narrowing down of solutions.\\
-\vfill
-All papers will be scored based on a retroactive relevancy heuristic i.e. how useful did these papers end up being to the problems presented in this project. 
-\end{itemize}
-\begin{table} [!htb]
-\caption{Relevancy of Papers}
-\centering
-\begin{tabular}{l|c|c}
-Paper & Type & Score \\ 
-V. Jacobson - Networking Named Content & Analysis & 5\\
-D. Kim - Efficient and Secure NDN & Implementation & 5\\
-S. Weber - Caching & Implementation & 3\\
-K. Lei - Blockchain Based Key Management & Implementation & 5\\
-L. Zhang - Named Data Networking & Review & 4\\
-S.Nakamoto - Bitcoin & Implementation & 4 \\
-L. Zhang - NDN & Implementation & 4 \\
-K. Huang - Cyber Attack Business & Review & 3 \\  
-K. Lei - BlockNDN & Implementation & 5 \\ 
-L. Wang - NLSR & Implementation & 5 \\ 
-NFD Team - NFD Developer's Guide & Implementation & 4 \\ 
-A. Afanasyev - NDN Technical Report 9 & Implementation & 4 \\ 
-Y. Yu - NDN Delorean & Implementation & 4\\
-S. Mastorakis - Security Support in NDN & Implementation & 5\\
-Diffie \& Hellman - Privacy and Authentication & Implementation & 3 \\
-R. Merkle - Protocols for PK Cryptosystems & Review & 3 \\
-Kohnfelder - Central Authority & Implementation & 3
-
-\end{tabular}
-\end{table}
 \section{State of The Art - Knowledge}
+This section will give a brief overview of how these two technologies - Blockchain and NDN, and their components, work.\par 
+The paper splits the Knowledge section into a Blockchain description, followed by an overview of NDN and all of its main components.
 \subsection{Blockchain}
-Blockchain is a distributed ledger of immutable digital records[medium.com]. It was conceptualized in Satoshi Nakamoto's Bitcoin paper in 2009. It is the main component of the Bitcoin cryptocurrency. It allows for decentralized transactions by solving the Byzantine Generals Problem[cit].\par 
-This problem refers to the inability of traditional systems, without a central authority, to determine that a certain resource hasn't been spent more than once. The reason banks or "central authorities" can vouch for transactions, and guarantee against double spending, is because the transactions don't happen instantaneously. They are each, individually confirmed, and also, should the bank make a mistake, it covers it(insurance).\par 
+Blockchain is a distributed ledger of immutable digital records[medium.com]. It was conceptualized in Satoshi Nakamoto's Bitcoin paper in 2009. It is the main component of the Bitcoin cryptocurrency. It allows for decentralized transactions by solving the Byzantine Generals Problem[cit]. This is also known as having Byzantine Fault Tolerance(BFT).\par 
+The Byzantine Generals Problem proposes a situation where a number of Generals from Byzantium have laid siege on an enemy city. The events of the problem develop in the East Roman Empire, 1000 years ago. \par
+Each General has an army. The problem they are faced with is taking an enemy city. Each of the Generals commands their own army. The Generals are aware that they can only take the city if they all order all of their armies to attack together in a \textbf{coordinated effort}. However, no General will commit to the attack without assurance that the others will also commit. In order to commit to an attack, the Generals must agree on a battle plan and a time of attack. There are a couple of problems with this:
+\begin{itemize}
+\item Firstly, the messengers could be captured
+\item Secondly, the Generals would need to reply with confirmations
+\item Thirdly, the Generals can change their minds, or be traitors and lie
+\end{itemize}
+The problem is that even if they agree on a time, no General can ever be sure that the others will attack with him because \textbf{confirmations are not instant.} This means that by the time a messenger arrives at General A's camp declaring General B's confirmation for an attack at a certain time, General B could've changed their mind and could've sent another messenger to relay the new message. This renders the original messenger's declaration invalid but General A doesn't know that. This cycle continues and the Generals can never be 100\% certain when to attack because they can never know what the other Generals are thinking in that instant of time.
+
+The blockchain addresses the inability of traditional systems, without a central authority, to determine that a certain resource hasn't been spent more than once. The reason banks or "central authorities" can vouch for transactions, and guarantee against double spending, is because the transactions don't happen instantaneously. They are each, individually confirmed, and also, should the bank make a mistake, it covers it(insurance).\par 
 The reason this isn't the case in a Blockchain distributed ledger system like Bitcoin, is because miners do Proof-of-Work on each node before verifying a transaction.
 \begin{figure}
 \includegraphics[width=6in]{hashes.png}
@@ -56,11 +33,10 @@ The reason this isn't the case in a Blockchain distributed ledger system like Bi
 
 \subsection{NDN}
 Named Data Networking began life in 2010 under the NSF's Future Internet Architecture[cit-ndn-tutorials-sigcomm17]. The leading effort in the NDN project has been UCLA Professor Lixia Zhang. Projects like NDN picked up traction after CCN began development at PARC, headed by Van Jacobson. NDN presents a paradigm shift for the Networking Stack. Instead of IP being the thin-waist of the stack, NDN suggests a data name abstraction, where the name of the content becomes this thin-waist. \par
-NDN is composed of a number of modules described below. It is a name based architecture where nodes in a network can request data, not based on where it comes from but based on the name of the data. I.e. a node requests /ndn/a-site/important/information instead of an IP address. This abstraction is hugely advantageous in today's Internet where content sharing is at the forefront of what the Internet delivers. NDN allows for nodes to respond to content requests(Interests) with Data packets. Nodes interact by sending Interests by Name. Data is retrieved in Data packets.\par 
-\vfill
-\begin{figure}
+NDN is composed of a number of modules described below. It is a name based architecture where nodes in a network can request data, not based on where it comes from but based on the name of the data. E.g.: a node requests \textbf{/ndn/a-site/important/information} instead of an IP address. This abstraction is hugely advantageous in today's Internet where content sharing is at the forefront of what the Internet delivers. NDN allows for nodes to respond to Interests, which are content requests, with Data packets which are the content. Nodes interact by sending Interests by Name. Data is retrieved in Data packets.\par 
+\begin{figure}[h]
 \includegraphics[width=6in]{hourglass.png}
-\caption{The Networking Stack}
+\caption{The Networking Stack[ndn-overview]}
 \end{figure}
 \subsection{Names}
 An NDN Name is a hierarchical name for NDN content, which contains a sequence of name components.[named-data.net docs] Each NDN name component  consists of variable lengths and is separated by a '/' separator. This design is advantageous because it is human readable and allows for users to configure Interest and Data filters using regular expressions. \\
@@ -75,15 +51,16 @@ Consider the following IPv4 Forwarding Table(CIDR Notation):\\
 192.168.0.0/16\\
 If the router was to look-up 192.168.20.19, both entries will "match", but the router will only return 192.168.20.16/28 since the submask /28 is longer than the other entry's /16 submask. [example-wikipedia]
 
-A similar example could be given an Interest arriving at node B asking for /ndn/a-site/lectures/telecomms/slides  and node B's FIB could have entries for /ndn/a-site and /ndn/a-site/lectures/telecomms/ in which case it will only return the second entry. \par 
+A similar example could be given an Interest arriving at node B asking for \textbf{/ndn/a-site/lectures/telecomms/slides}  and node B's FIB could have entries for \textbf{/ndn/a-site} and \textbf{/ndn/a-site/lectures/telecomms/} in which case it will only return the second entry. \par 
 
 The problem with LNPM comes from the inherent differences between address lengths in IP and NDN. In most cases, NDN names will be longer than IP as the namespace is unbounded. The difference in size is so drastic, that TCAM or SRAM memory modules for the FIB would not be large enough if the number of rules is large. The NDN FIB has to use DRAM in order to accommodate for this size difference. With such a difference in size and complexity, look-ups can take O(k) string look-ups[yuan].\par 
 This is why NDN employs two techniques proposed in a Washington University paper by Haowei Yuan and Patrick Crowley. The first changes the LNPM design to a binary search of hash tables reducing lookups to O(log(k)) for prefixes with k components [yuan] and the second technique is level pulling to improve the average case. This makes the name prefix lookup solution scalable - a necessary feature for the NDN architecture to work. 
-
-\subsection{NFD}
-Named Data Forwarding Daemon is responsible for handling all packets in the network. An instance of NFD runs on every node in a network. When a packet arrives the NFD checks if that packet is destined for the particular node and if not it discards it based on a policy to allow/disallow unsolicited Data packets.
-\subsection{NLSR}
-Named Data Link State Routing is the NDN module which deals with routing when a topology is created. NLSR works by sending out Link State Advertisements when a network is created. What this means is that, each node has its Forwarding Interest Base populated with adjacent nodes. NLSR takes time to converge proportional to CPU power in the Network. 
+\subsection{Faces}
+Faces are abstractions of physical and virtual interfaces[V2E paper]. They provide the main methods for NDN communcation. Faces hold a connection to a forwarder and support Interest/Data exchanges[ndn-docs].In order to communicate in an NDN network, each entity must have a Face. Because Faces abstract away physical/virtual interfaces, it allows NDN to be used as an overlay network over existing technologies like IP[V2E paper]
+\subsection{Named-Data Forwarding Daemon}
+Named-Data Forwarding Daemon(NFD) is responsible for handling all packets in the network. An instance of NFD runs on every node in a network. When a packet arrives the NFD checks if that packet is destined for the particular node and if not it discards it based on a policy to allow/disallow unsolicited Data packets.
+\subsection{Named-Data Link State Routing}
+Named-Data Link State Routing(NLSR) is the NDN module which deals with routing when a topology is created. NLSR works by sending out Link State Advertisements when a network is created. What this means is that, each node has its Forwarding Interest Base populated with adjacent nodes. NLSR takes time to converge proportional to CPU power in the Network. 
 \subsection{Chronosync}
 Chronosync is a module used when there is a need for nodes to receive data or be updated at the same time. Chronosync runs on top of NFD and synchronizes Data and Interest packet sending and receiving.
 \subsection{Content Store}
@@ -120,10 +97,43 @@ However, when it came to Blockchain integration in NDN, there wasn't much work d
 
 There is one particular paper titled BlockNDN by Kai Lei which describes a Blockchain abstraction for use in IP using multicast. This paper investigated whether Blockchain is a good fit for NDN and although it did not present a security solution involving Blockchain, this investigation was very useful when designing the solution for this paper.\par
 
-Another related solution which I used for some of its ideas was Alexander Afanasyev's paper titled NDNDelorean. This paper introduced a version concept for old data that needed to be authenticated. The version concept is quite useful when it comes to certificates. Because certificates can become invalid, it is important to be able to invalidate them. The problem with the Blockchain approach is that once appended to the Blockchain, a certificate can never be deleted without altering the whole Blockchain, which would render the whole Blockchain invalid. This is why, instead we introduce "version control" which in this project's case involves a simple integer(which could also be a boolean) which keeps track of a block's certificate's version. The current version is 1 if valid and 0 if invalid.
+Another related solution which I used for some of its ideas was Alexander Afanasyev's paper titled NDNDelorean. This paper introduced a version concept for old data that needed to be authenticated. The version concept is quite useful when it comes to certificates. Because certificates can become invalid, it is important to be able to represent that in the Public Interest Base(PIB) and also the Blockchain. The problem with the Blockchain approach is that once appended to the Blockchain, a certificate can never be deleted without altering the whole Blockchain, which would render the whole Blockchain invalid. This is why, instead we introduce "version control" which in this project's case involves a simple integer(which could also be a boolean) which keeps track of a block's certificate's version. The current version is 1 if valid and 0 if invalid.
 \section{Literary Review}
 This section has been divided in the different technical components that I've investigated as part of my FYP. Apart from being split into NDN and Blockchain, I've also split NDN into: Security, NFD, NLSR, Mini-NDN, Content Store.
 
+The following table aims to quantify the usefulness of each paper that has been looked at. This method has been directly inspired by Masters student Conor Mooney who did an excellent job at scoring and qualifying his papers while researching. The categories for each paper reviewed fall under one of three categories: analysis, implementation, review.\\
+\begin{itemize}
+\item Analysis - Refers to papers which analyse a technology\\
+\item Implementation - Refers to papers which discuss technical aspects of the technologies which were used. These papers were mostly the NDN Developer Guides.\\
+\item Review - Reviews classify papers which mainly contribute with an evaluation - useful when there are different technologies that one might use for a particular problem, allowing for the narrowing down of solutions.\\
+\vfill
+All papers will be scored based on a retroactive relevancy heuristic i.e. how useful did these papers end up being to the problems presented in this project. 
+\end{itemize}
+\begin{table} [!htb]
+\caption{Relevancy of Papers}
+\centering
+\begin{tabular}{l|c|c}
+Paper & Type & Score \\ 
+V. Jacobson - Networking Named Content & Analysis & 5\\
+D. Kim - Efficient and Secure NDN & Implementation & 5\\
+S. Weber - Caching & Implementation & 3\\
+K. Lei - Blockchain Based Key Management & Implementation & 5\\
+L. Zhang - Named Data Networking & Review & 4\\
+S.Nakamoto - Bitcoin & Implementation & 4 \\
+L. Zhang - NDN & Implementation & 4 \\
+K. Huang - Cyber Attack Business & Review & 3 \\  
+K. Lei - BlockNDN & Implementation & 5 \\ 
+L. Wang - NLSR & Implementation & 5 \\ 
+NFD Team - NFD Developer's Guide & Implementation & 4 \\ 
+A. Afanasyev - NDN Technical Report 9 & Implementation & 4 \\ 
+Y. Yu - NDN Delorean & Implementation & 4\\
+S. Mastorakis - Security Support in NDN & Implementation & 5\\
+Diffie \& Hellman - Privacy and Authentication & Implementation & 3 \\
+R. Merkle - Protocols for PK Cryptosystems & Review & 3 \\
+Kohnfelder - Central Authority & Implementation & 3
+
+\end{tabular}
+\end{table}
 \subsection{Security}
 [Kim15]Efficient and Secure NDN by D. Kim - 2015 Seventh International Conference on Ubiquitous and Future Networks, pp. 118-120, Tokyo, Japan. 7-10 July 2015.
 

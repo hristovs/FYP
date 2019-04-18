@@ -1,15 +1,24 @@
 \chapter{Introduction}
 Named Data Networking is an interesting new paradigm in the space of network architectures. Years on since Bell Labs' work on telephony, networking research assumed that telephony is the right model for data networking[1]. This model implied that there had to be a determined route between two points for communication to happen - the setup for which was costly. This was proven not to be the case in Paul Baran's research paper titled "On Distributed Communication Networks" in 1964, which was widely disregarded until the practical application of his work in ARPAnet(Sept,'71).MIT Senior Researcher David Clark's paper on end-to-end principle confirmed the same and it became apparent that networking solved the telephony problem. However, we are still using this same architecture which was invented as a solution for a problem of 5 decades ago, and the Internet of today is not facing the same challenges. CISCO predicted in 2013[C.Index, Iouannou+Weber], that by the end of 2017, the annual traffic of the internet would exceed 1.4 zettabytes with almost 80\% of that being video traffic.
 
-This is why, in the age of content delivery, Named Data Networking and other Information Centric Networking architectures aim to move away from the source-destination pairwise method of IP communication which is inherently limited. Instead, NDN proposes a Name-based approach where each node in a network can require content based on the name of the piece of data it requires. 
+This is why, in the age of content delivery, Named Data Networking and other Information Centric Networking architectures aim to move away from the source-destination pairwise method of IP communication which is inherently limited. Instead, NDN proposes a Name-based approach where each node in a network can request content based on the name of a piece of data it requires. 
 
 This project aims to improve on the security implemented in Named Data Networking.
 
 
 The aim of this introduction is to give background for motivation as well as lay out the structure of this paper.
 \section{Motivation}
-Traditional NDN: The traditional NDN architecture presents a security architecture not dissimilar to the Central Authority architecture conceptualized by Loren Kohnfelder in 1978[cit]. It provides a public file[cit] system where all nodes can check the entries for other nodes issued by a Central Authority which signs each entry(certificate). 
+Traditional NDN: The traditional NDN architecture presents a security architecture not dissimilar to the Central Authority architecture conceptualized by Loren Kohnfelder in 1978[cit]. It provides a public file[cit] system where all nodes can check the entries for other nodes issued by a central, trusted third party called the Certificate Authority(CA) which signs each entry or 'certificate'. This is all quite simple in a MiniNDN test environment, as described in the Certificates section in Chapter 2. In the case of a general or non-experimental NDN deployment[weber-correspondence] however, this is not the case.\par 
+The Network Manager would have to request a certificate verified by the CA - which the Manager in turn would have to trust, so the CA must be authentic and trusted by most networks like Verisign, GeoTrust,Symantec, etc... and then the Network Manager would provide a certificate for every node in the network which would in turn be signed by the root certificate provided by the authenticated CA. When a node wants to verify a certificate, like it would if it was receiving a Data packet, it would have to verify all of the certificates in the network hierarchy meaning it would also have to verify the root network certificate, for which it would have to contact the Certificate Authority. This means that verifying certificates can potentially involve a lot of communication.\par 
+\vline
+This could be avoided by introducing a Blockchain which each node could keep a copy of. This would allow nodes to verify certificates without needing to contact the CA.
 
+To visualize this, the following example is presented. An NDN Network with an external CA has a root namespace /ndn/ and in it there is a node called A. Node A has a clock module which also has its own certificate which allows it to verify that its data is its own. If another node, like Node B for example, wants the time from Node A's clock, the node would simply express an Interest. When the clock replies with a Data packet, Node B would have to verify the data by verifying clock.cert, a.cert and root.cert for which it would need to contact the CA. 
+\begin{figure}[h]
+\centering
+\includegraphics[width=6in,left]{certarch.png}
+\caption{Certificate Hierarchy}
+\end{figure}
 \section{Aims}
 Instead of transactions, this project aims to store certificates in a similar fashion. The goal is to do so efficiently, without increasing computational load on individual nodes in the system or increasing significantly the bandwidth use.
 

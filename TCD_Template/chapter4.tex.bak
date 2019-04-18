@@ -1,5 +1,8 @@
 \chapter{Results}
+This chapter presents the result of the Blockchain in NDN experiment. The outcome of this experiment is interesting because it presents a different approach to verifying certificates. This project recognizes that, despite the apparent benefits of not having to contact the Certificate Authortiy for verification, there is also added complexity to the NDN security protocol. The results from this experiment investigate the trade off in this scenario, in different topologies using MiniNDN. Because of the serious time constraint imposed by our different modules, this project instead presents an Ideal Evaluation for the experiment.
 \section{Ideal Evaluation}
+
 \subsection{Overhead and Latency}
+
 \section{Discussion}
 

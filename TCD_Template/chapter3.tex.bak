@@ -1,5 +1,4 @@
 \chapter{Design and Implementation}
-\section{Introduction}
 This chapter will discuss in detail the design and implementation of the Blockchain in NDN. It will outline and justify different design choices that were made along the way and also the difficulty they presented/alleviated. 
 
 The Design is sectioned into: The Problem, The Development Platform, The Data Structure and Content Delivery, which will be discussed in that particular order.
@@ -31,7 +30,7 @@ It goes without saying that MiniNDN was also chosen because it is open and free 
 \begin{figure}
 
 \includegraphics[width=6in]{minindn}
-\caption{Basic MiniNDN architecture}
+\caption{Basic MiniNDN architecture[memphis.edu]}
 \end{figure}
 
 \section{The Data Structure}
@@ -76,8 +75,8 @@ Now that the allocation of PibBlocks to PibBlockchains was completed, and there 
 Shortly after adding the code to the project, it became evident that the solution wouldn't work in its current form. That is because the NDN Team have developed a pretty robust automatic Certificate Authority. I found this out when I realized that my PibBlock data structure was parsing certificates being created, allocating new memory for them and then copying the certificate. The problem with this approach is that the copied certificates have not been authorised by the Certificate Authority. This is why when running the simulation, it would abruptly exit. 
 
 So instead, the PibBlock class looks to the Certificate class for inspiration. The Certificate class overloads the << operator for certs by extracting all data from them and printing it in chunks. PibBlock takes the functions used to extract data from the certificates and implements them in order to store the Certificate data in strings. Once stored, nodes can still access the signatures for each certificate in string form and verify them.
-
-\begin{figure}
+\vfill
+\begin{figure}[h]
 \includegraphics[width=6in]{NDN.png}
 \caption{
 NDN Components.Orange Rectangles - Intimate knowledge of modules' code required. Orange Rectangles w/ Red Frames - Modules where code was either altered or added for the scope of this project.}
@@ -105,4 +104,4 @@ Instead, the thermometer node sends a "Control Interest"(now deprecated and know
 \end{figure}
 We are met with a near identical situation. We have miners which need to broadcast a Blockchain to all nodes in a network. One approach could be to ensure that nodes request an updated Blockchain every time that they receive a Data packet. However, the delay from doing this would render the solution pointless and would provide little benefit in terms of a speed-up compared to the regular PIB look-up that nodes do(it would still improve on the single point of failure problem). So instead, when the miner verifies a new Certificate in the Blockchain, it sends out a Signed Interest to all nodes, to get them to request the information(Express an Interest) for the updated Blockchain. \par
 
-The nodes in the network would have an InterestFilter which will verify 
+The nodes in the network would have an InterestFilter which will verify that this Interest is indeed coming from an authenticated miner. Once the node receives the Signed Certificate, it will send an Interest packet to the miner to send out the updated Blockchain. This adds additional strain on the network, however, this is counterbalanced by the reduction in look-ups that nodes have to do in order to verify certificates.
