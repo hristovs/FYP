@@ -1,14 +1,27 @@
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {1.1}{\ignorespaces Certificate Hierarchy}}{3}% 
+\contentsline {figure}{\numberline {1.1}{\ignorespaces Certificate Hierarchy}}{4}{figure.1.1}% 
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {2.1}{\ignorespaces Blockchain structure[satoshi]}}{8}% 
-\contentsline {figure}{\numberline {2.2}{\ignorespaces The Networking Stack[ndn-overview]}}{9}% 
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Blockchain structure\cite {015}}}{10}{figure.2.1}% 
+\contentsline {figure}{\numberline {2.2}{\ignorespaces The Networking Stack\cite {017}}}{11}{figure.2.2}% 
+\contentsline {figure}{\numberline {2.3}{\ignorespaces Forwarding Table}}{12}{figure.2.3}% 
+\contentsline {figure}{\numberline {2.4}{\ignorespaces Face Architecture\cite {026}}}{13}{figure.2.4}% 
+\contentsline {figure}{\numberline {2.5}{\ignorespaces An Interest Packet\cite {027}}}{14}{figure.2.5}% 
+\contentsline {figure}{\numberline {2.6}{\ignorespaces A Data Packet\cite {028}}}{14}{figure.2.6}% 
+\contentsline {figure}{\numberline {2.7}{\ignorespaces NFD Structure and Components[29]}}{15}{figure.2.7}% 
+\contentsline {figure}{\numberline {2.8}{\ignorespaces Link-State Advertisements\cite {033}}}{17}{figure.2.8}% 
+\contentsline {figure}{\numberline {2.9}{\ignorespaces Chronosync Overview \cite {037}}}{18}{figure.2.9}% 
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces Basic MiniNDN architecture[memphis.edu]}}{24}% 
-\contentsline {figure}{\numberline {3.2}{\ignorespaces This figure shows how PibBlockchain interacts with NDN and the std library}}{27}% 
-\contentsline {figure}{\numberline {3.3}{\ignorespaces NDN Components.Orange Rectangles - Intimate knowledge of modules' code required. Orange Rectangles w/ Red Frames - Modules where code was either altered or added for the scope of this project.}}{29}% 
-\contentsline {figure}{\numberline {3.4}{\ignorespaces Node Communication[A Survey of ICN - Dirk Kutscher]}}{30}% 
-\contentsline {figure}{\numberline {3.5}{\ignorespaces Signed Interest}}{32}% 
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Basic MiniNDN architecture\cite {049}}}{33}{figure.3.1}% 
+\contentsline {figure}{\numberline {3.2}{\ignorespaces This figure shows how PibBlockchain interacts with NDN and the std library}}{36}{figure.3.2}% 
+\contentsline {figure}{\numberline {3.3}{\ignorespaces NDN Components: Orange Rectangles - Intimate knowledge of modules' code was required. Orange Rectangles w/ Red Frames - Modules where code was either altered or added for the scope of this project.}}{38}{figure.3.3}% 
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Node Communication\cite {051}}}{39}{figure.3.4}% 
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Signed Interest}}{41}{figure.3.5}% 
 \addvspace {10\p@ }
+\contentsline {figure}{\numberline {4.1}{\ignorespaces NLSR Trust Hierarchy\cite {054}}}{45}{figure.4.1}% 
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Keys generated with NLSR-Security\cite {056}}}{46}{figure.4.2}% 
+\contentsline {figure}{\numberline {4.3}{\ignorespaces KeyChain log}}{48}{figure.4.3}% 
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Sample Topology \cite {057}}}{51}{figure.5.1}% 
+\contentsline {figure}{\numberline {5.2}{\ignorespaces The Current NDN Testbed Topology \cite {055}}}{51}{figure.5.2}% 
 \addvspace {10\p@ }
 \addvspace {10\p@ }

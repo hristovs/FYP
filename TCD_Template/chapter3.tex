@@ -1,9 +1,9 @@
-\chapter{Design and Implementation}
-This chapter will discuss in detail the design and implementation of the Blockchain in NDN. It will outline and justify different design choices that were made along the way and also the difficulty they presented/alleviated. 
+\chapter{Design}
+This chapter will discuss in detail, the high level approach of the design of the Blockchain in NDN. It will outline and justify different design choices that were made along the way and also the difficulty they presented or indeed alleviated. 
 
 The Design is sectioned into: The Problem, The Development Platform, The Data Structure and Content Delivery, which will be discussed in that particular order.
 \section{The Problem}
-The particular issue that this project concerns itself with is the security protocol. In particular, in the previous chapter, it was described that the current implementation relies on the CA method described by Kohenfelder in his B.Sc. dissertation and improved upon by Merkle's tree authentication[merkle]. \par
+The particular issue that this project concerns itself with is the security protocol. In particular, in the previous chapter, it was described that the current implementation relies on the CA method described by Kohenfelder in his B.Sc. dissertation and improved upon by Merkle's tree authentication\cite{048}. \par
 Despite efforts made in the security of the CA and the public keys file, there hasn't been much regard for the efficiency of the network when it comes to security. There are two problems that this project aims to address: \begin{itemize}
 
 \item reduce lookups in the Public Information Base - alleviating the time constraint in having to request that information and go through it.
@@ -14,23 +14,23 @@ Despite efforts made in the security of the CA and the public keys file, there h
 There are a number of tools which can be used to experiment with NDN. These are the following: ndnSIM, Docker and MiniNDN.
 MiniNDN is an emulator. It is an extension of mini-net - a networking emulator. On top of mini-net, one can install MiniNDN and all of its modules:Chronosync, PSync, NDN-CXX, NDN-CPP, NFD and NLSR.
 
-There are a couple of reasons why MiniNDN was chosen for this product. Firstly, it is very easy to set up. The knowledge required to get started with MiniNDN is minimal. It is largely based on MiniCCNx which is a fork of  Mininet meaning there are plenty of resources available online in terms of reading material on getting started.
+There are a couple of reasons why MiniNDN was chosen for this project. Firstly, it is very easy to set up. The knowledge required to get started with MiniNDN is minimal. It is largely based on MiniCCNx which is a fork of  Mininet meaning there are plenty of resources available online in terms of reading material on getting started.
 
 It goes without saying that MiniNDN was also chosen because it is open and free under the GNU General Public License. They also have a Redmine site which tracks and describes all bugs/features as well as a useful mailing list for any developers looking to experiment with the software.
 
  There are also a number of MiniNDN specific tutorials that have been created by NDN's main coders - Alexander Afanasyev and Ashlesh Gawande. They go into quite a bit of depth regarding different utilities in MiniNDN. Ashlesh's tutorial mainly concerns experiments and topologies where Alex's tutorial goes a bit more in depth regarding node interactions. 
  
- There are drawbacks associated with using MiniNDN also. It is an emulator not a simulator, meaning all of the topologies tested are created in real time - with NLSR convergence happening in real time also. This means that for a portable machine, with an 8th generation hyper-threaded Intel i7 processor, it can take up to 70 seconds for NLSR to converge on a basic 4 node topology. This however scales with CPU performance, so more CPU power should result in much lower convergence times. 
+ There are drawbacks associated with using MiniNDN also. It is an emulator not a simulator, meaning all of the topologies tested are created in real time - with NLSR convergence happening in real time also. This means that for a portable machine, with an 8th generation hyper-threaded Intel i7 processor, it can take up to 70 seconds for NLSR to converge on a basic 4 node topology. Convergence time scales with CPU performance, so more CPU power should result in much quicker convergence. 
  
  As well as that, when defining topologies or writing experiments, the emulator must be reinstalled every time in order for these changes to be recognized.
  
  MiniNDN works by creating an NDN container around nodes in a mininet simulator. Each node then runs an instance of NFD and NLSR. The user can then configure topologies - including amount of nodes, nodes' identities and adjacencies. As well as that the user can set parameters for hyperbolic routing which NLSR can run on if set in the configuration file. 
  
- As well as this, MiniNDN is useful because we can run different programs on nodes without having to use the python experiments and reinstall MiniNDN every time we alter an experiment. Each node can run an xterm in the background by using the command $"{<}node{>} \; xterm \; \& "$ after which the user can export the home folder for each node and run any of the sample programs from the NDN libraries or indeed write their own. 
+ MiniNDN is useful because we can run different programs on nodes without having to use the python experiments and reinstall MiniNDN every time we alter an experiment. Each node can run an xterm in the background by using the command $``{<}node{>} \; xterm \; \& "$ after which the user can export the home folder for each node and run any of the sample programs from the NDN libraries or indeed write their own. 
 \begin{figure}
 
 \includegraphics[width=6in]{minindn}
-\caption{Basic MiniNDN architecture[memphis.edu]}
+\caption{Basic MiniNDN architecture\cite{049}}
 \end{figure}
 
 \section{The Data Structure}
@@ -51,7 +51,7 @@ Public Information Base(PIB) - This is the public key infrastructure hierarchy w
 
 The PIB class in the NDN-CXX library is responsible for creating and publishing certificates. The design suggested by Dr. Weber was to create a wrapper so that any time a certificate is created, we could simply add it to the blockchain. Then the miner nodes could verify it and publish the given information. This however proved challenging in a number of ways. 
 
-The first issue I encountered had to do with instancing. Because we needn't necessarily have only one instance of a PIB, we have to make sure that each PIB's certificates go in that specific PIB's Blockchain. This is precisely why Alexander Afanasyev has designed the PIB class in a way that one cannot instantiate a Trusted Platform Module(TPM) outside the PIB class i.e. the constructor for the PIB is the only place where the TPM is also constructed. This means that we cannot have a PIB be matched with a TPM that isn't its counter part. I aimed to achieve the same goal. I did this by looking outside of the PIB class. The PIB class is instantiated and governed by the KeyChain class. This in turn means that the KeyChain class instantiates both the PIB and the TPM. This is why I tried to make the constructor for the PibBlockchain data type to use as an argument the KeyChain's address meaning it would be instantiated in the KeyChain with code that looks something like "PibBlockchain certChain = new PibBlockchain(this);"
+The first issue I encountered had to do with instancing. Because we needn't necessarily have only one instance of a PIB, we have to make sure that each PIB's certificates go in that specific PIB's Blockchain. This is precisely why Alexander Afanasyev has designed the PIB class in a way that one cannot instantiate a Trusted Platform Module(TPM) outside the PIB class i.e. the constructor for the PIB is the only place where the TPM is also constructed. This means that we cannot have a PIB be matched with a TPM that isn't its counter part. I aimed to achieve the same goal. I did this by looking outside of the PIB class. The PIB class is instantiated and governed by the KeyChain class. This in turn means that the KeyChain class instantiates both the PIB and the TPM. This is why I tried to make the constructor for the PibBlockchain data type to use as an argument the KeyChain's address meaning it would be instantiated in the KeyChain with code that looks something like ``PibBlockchain certChain = new PibBlockchain(this);"
 
 However, the PIB Blockchain was comprised of blocks or PibBlocks, which were a separate data structure which made use of the Certificates class in order to store certificates or indeed to be able to parse them at all in the first place. Because PibBlock inherited from Certificates, and PibBlockchain inherited from PibBlock and KeyChain inherited from both PibBlockchain and Certificates, there was suddenly a circular dependency which could not be broken without completely scrapping the PibBlockchain constructor design which takes a pointer to the KeyChain as an argument. 
 
@@ -62,11 +62,11 @@ However, the PIB Blockchain was comprised of blocks or PibBlocks, which were a s
 
 This is where Dr. Weber's original "wrapper" idea came to mind and to good use. Instead of having to worry about the KeyChain pointing to the correct PibBlockchain for each PIB, we could just instead make a mutable PibBlockchain in the PIB class which would work on the exact same principle as Alex Afanasyev's idea to instantiate the TPM in the PIB. We simply do the same thing with the PibBlockchain and instantiate it in the PIB. This way, we no longer have to worry having mismatched PIB and Blockchain. 
 
-Blocks on the other hand weren't at all a concern when it came to creating instances of the Blockchain. The purpose of the PibBlock class is twofold: Firstly, to encapsulate all of the data from each Certificate and secondly, to do all of the "heavy lifting". What this means is that the PibBlock class is responsible for the hashing of each block. 
+Blocks on the other hand weren't at all a concern when it came to creating instances of the Blockchain. The purpose of the PibBlock class is twofold: Firstly, to encapsulate all of the data from each Certificate and secondly, to do all of the ``heavy lifting". What this means is that the PibBlock class is responsible for the hashing of each block. 
 
 Of course this doesn't mean that there isn't a concern about which blocks go in which Blockchain. However, blocks are only created when Certificates are created. Certificates are created in the KeyChain.cpp. This means that each KeyChain has only one PibBlockchain to work with, because each KeyChain only instantiates one PIB. One PIB = One PibBlockchain. Therefore if we create PibBlocks in the KeyChain they will inherently be PibBlockchain specific and will be out of scope for any other KeyChains or PibBlockchains. This inherent property of C++ and indeed all object oriented programming made the challenge of making sure that each PibBlock is added to the correct Blockchain very simple.
 
-"Within C++, there is a much smaller and clearer language struggling to get out" - Bjarne Soustroup[cit needed]
+``Within C++, there is a much smaller and clearer language struggling to get out" - Bjarne Soustroup\cite{050}
 \\
 
 
@@ -74,27 +74,27 @@ Now that the allocation of PibBlocks to PibBlockchains was completed, and there 
 
 Shortly after adding the code to the project, it became evident that the solution wouldn't work in its current form. That is because the NDN Team have developed a pretty robust automatic Certificate Authority. I found this out when I realized that my PibBlock data structure was parsing certificates being created, allocating new memory for them and then copying the certificate. The problem with this approach is that the copied certificates have not been authorised by the Certificate Authority. This is why when running the simulation, it would abruptly exit. 
 
-So instead, the PibBlock class looks to the Certificate class for inspiration. The Certificate class overloads the << operator for certs by extracting all data from them and printing it in chunks. PibBlock takes the functions used to extract data from the certificates and implements them in order to store the Certificate data in strings. Once stored, nodes can still access the signatures for each certificate in string form and verify them.
+So instead, the PibBlock class looks to the Certificate class for inspiration. The Certificate class overloads the $<<$ operator for certs by extracting all data from them and printing it in chunks. PibBlock takes the functions used to extract data from the certificates and implements them in order to store the Certificate data in strings. Once stored, nodes can still access the signatures for each certificate in string form and verify them.
 \vfill
 \begin{figure}[h]
 \includegraphics[width=6in]{NDN.png}
 \caption{
-NDN Components.Orange Rectangles - Intimate knowledge of modules' code required. Orange Rectangles w/ Red Frames - Modules where code was either altered or added for the scope of this project.}
+NDN Components: Orange Rectangles - Intimate knowledge of modules' code was required. Orange Rectangles w/ Red Frames - Modules where code was either altered or added for the scope of this project.}
 \end{figure}
 \section{Broadcasting}
 Once the data is stored in the Blockchain, the next objective was to figure out a way to disseminate it across the network. This is the most important part of the project. The reason why the Blockchain is useful is so nodes can compare certificates against it. If they can't do that because they don't have that information, then the Blockchain is useless. The reason why the solution required was non-trivial was because of the communications design in NDN. In order for nodes to communicate, they must send out an Interest - which made the tasks more difficult than anticipated. \par 
 \begin{figure}[h]
 \includegraphics[width=6in]{comms.png}
-\caption{Node Communication[A Survey of ICN - Dirk Kutscher]}
+\caption{Node Communication\cite{051}}
 \end{figure}
 \subsection{Naive Approach}
-The proof of concept method of broadcasting the blockchain on port (ask Stefan for port no.) utilizes, in the case of MiniNDN, the file system. The Blockchain is broadcast to all nodes via the port and appears in the temp folder for all of the nodes. This is the naive approach and it is impractical because it just blasts data at the nodes and wouldn't work in a real environment.
+The proof of concept method of broadcasting the Blockchain using UDP, utilizes, in the case of MiniNDN, the file system. The Blockchain is broadcast to all nodes via the port and appears in the temp folder for all of the nodes. This is the naive approach and it is impractical because it just blasts data at the nodes and wouldn't work in a real environment.
 
 \subsection{Reconfigure NFD approach}
 The NFD is, as mentioned in the previous chapter, how Data and Interest packets get propagated in an NDN network. While investigating different options for broadcasting, I came across the configuration file for NFD which gives the user the option to redefine all nodes' caching policies. In it, there are a couple of listed policies. One only allows Data packets to be cached for which there are expressed Interests. The other allows Data to be cached regardless of whether there's been an Interest for it. \par
 This project has explored one option for this approach. Because reconfiguring the NFD to make it so every node caches everything isn't feasible or wise, the option to create an altogether new policy was explored. However, there wasn't enough time to explore this option fully.
 \subsection{Signed Interest approach}
-This is the approach which was chosen for this project. Firstly, we must define a Signed Interest. This type of Interest is the second version of what was known as a "Control Interest". These specialized Interest packets were designed for Internet Of Things applications where nodes would have to communicate and sometimes control one another and the conventional Interest-Data packet communication didn't allow for this.\par
+This approach utilizes some IoT concepts in NDN that have been previously implemented and tested. Firstly, we must define a Signed Interest. This type of Interest is the second version of what was known as a ``Control Interest". These specialized Interest packets were designed for Internet Of Things applications where nodes would have to communicate and sometimes control one another and the conventional Interest-Data packet communication didn't allow for this.\par
 
 In a control system where a thermometer node has to tell a WiFi connected HVAC the temperature, so it can adjust accordingly, the conventional system leads to a paradox. This is because the thermometer node cannot simply send a Data packet to the HVAC, giving it the temperature, because this Data packet would be unsolicited. Also, it is not feasible to set up the HVAC to flood the network with temperature Interest packets at all times because this creates unnecessary strain on the network. It would be quite pointless to send out Interests(polling) at a random or set interval as well, as in most environments, temperature change doesn't happen at set intervals. This could make for an ineffective temperature control system if the temperature has changed from the desired temperature but the HVAC isn't due to poll the thermometer for a prolonged amount of time. \par 
 Instead, the thermometer node sends a "Control Interest"(now deprecated and known instead as a Signed Interest) where it tells the HVAC to ask for the temperature reading.\par 
@@ -105,3 +105,13 @@ Instead, the thermometer node sends a "Control Interest"(now deprecated and know
 We are met with a near identical situation. We have miners which need to broadcast a Blockchain to all nodes in a network. One approach could be to ensure that nodes request an updated Blockchain every time that they receive a Data packet. However, the delay from doing this would render the solution pointless and would provide little benefit in terms of a speed-up compared to the regular PIB look-up that nodes do(it would still improve on the single point of failure problem). So instead, when the miner verifies a new Certificate in the Blockchain, it sends out a Signed Interest to all nodes, to get them to request the information(Express an Interest) for the updated Blockchain. \par
 
 The nodes in the network would have an InterestFilter which will verify that this Interest is indeed coming from an authenticated miner. Once the node receives the Signed Certificate, it will send an Interest packet to the miner to send out the updated Blockchain. This adds additional strain on the network, however, this is counterbalanced by the reduction in look-ups that nodes have to do in order to verify certificates.
+\subsection{ChronoChat}
+ChronoChat is perhaps the best way to approach this problem. The details of how ChronoChat works are described by A. Afanasyev and Z. Zhu in the `Let's Chronosync' paper. They describe how ChronoChat creates a system, where every user or identity keeps an outstanding sync interest\cite{052} with the current state. The benefits of this outstanding sync interest are immense. Firstly, this interest actually contains data with the system's current state, which means that as it propagates through the system with the help of NDN's inherent multicasting characteristics, it immediately updates every node with the system's most up-to-date state. Should any node introduce a change in the system, Chronosync will satisfy that node's outstanding interest with a Data packet containing the new system state. As this Data packet propagates through the system, so will all the other nodes be updated on the new system state.\par
+In a similar fashion, miner nodes, using the Chronosync module, could maintain an outstanding Interest. When a node mines a block, it can satisfy that Interest with a Data packet which will then propagate through the system, updating all nodes with the new system state i.e. with the new, verified Blockchain.
+
+\subsection{Interest with Hash Value}
+In the BlockNDN project, it was made apparent that Chronosync isn't necessary for maintaining system state. However, in a system where it is imperative for all nodes to have the most up-to-date information at the same time, Chronosync is a better solution. The simpler option would be to just append the value of the Blockchain's newest hash to an Interest which will then be multicast through the system by the miner once they verify the newest block. This approach doesn't need Chronosync to maintain its state because Blockchain is naturally a digest chain reflecting the current owner's dataset [BlockNDN]
+\section{Challenges Overview}
+As described above, the main challenge for the NDN Blockchain project was broadcasting the Data. There were a number of approaches available with the ChronoChat approach being by far the most suitable for this project. Careful selection of a broadcasting method is crucial when extending a networking architecture. This is due to the overhead being introduced. \par 
+Deciding on where the Blockchain should live was also a big design challenge. There were many pitfalls when designing this, thoroughly described in Chapter 5. \par 
+Finally, and possibly just as important as the other two, a design element that was hardly looked at because of time constraints was deciding the difficulty of mining factor which will probably be left as future work.
