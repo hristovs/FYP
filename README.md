@@ -5,7 +5,8 @@ NDN + Blockchain
 
 In order to run, install MiniNDN from their [repo](https://github.com/named-data/mini-ndn).
 Clone the repository and run:
-	sudo ./install.sh -a 
+
+    sudo ./install.sh -a 
 
 This will install MiniNDN with all dependecies. Then, to be able to run the NDN+Blockchain code,
 go into the `ndn-cxx` library, specifically `ndn-cxx/ndn-cxx/security/pib/` and copy the code in this repo.
