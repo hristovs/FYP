@@ -10,7 +10,7 @@ Clone the repository and run:
 
 This will install MiniNDN with all dependecies. Then, to be able to run the NDN+Blockchain code,
 go into the `ndn-cxx` library, specifically `ndn-cxx/ndn-cxx/security/pib/` and copy the code in this repo.
-Following this, remove the `ndn-cxx/bin` directory and recompile using:
+Following this, remove the `ndn-cxx/bin` directory(this is done to avoid linker errors) and recompile using:
 
     sudo ./waf configure
     sudo ./waf 
