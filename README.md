@@ -22,7 +22,8 @@ After this step is completed, run the emulator:
 
 
 This will run the emulator with NLSR security enabled which is just one of many
-security schemes that can be implemented. That one is the default one.
+security schemas that can be implemented. NLSR Security is the default one, it creates
+certificates for all entities and their NLSR instances.
 
 
 
