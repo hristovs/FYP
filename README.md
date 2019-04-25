@@ -16,7 +16,7 @@ Following this, remove the `ndn-cxx/bin` directory(this is done to avoid linker 
     sudo ./waf 
     sudo ./waf install
 
-Finally, reinstall minindn using:
+Then, go back to the root `mini-ndn` directory and reinstall MiniNDN using:
 
     sudo ./install.sh -a
 
