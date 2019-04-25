@@ -10,10 +10,9 @@ Clone the repository and run:
 This will install MiniNDN with all dependecies. Then, to be able to run the NDN+Blockchain code,
 go into the `ndn-cxx` library, specifically `ndn-cxx/ndn-cxx/security/pib/` and copy the code in this repo.
 Following this, remove the `ndn-cxx/bin` directory and recompile using:
-	```sudo ./waf configure 
-	sudo ./waf 
-	sudo ./waf install
-	```
+
+    sudo ./install.sh -i
+
 
 After this step is completed, run the emulator:
 	```sudo minindn --nlsr-security
