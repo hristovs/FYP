@@ -16,6 +16,10 @@ Following this, remove the `ndn-cxx/bin` directory(this is done to avoid linker 
     sudo ./waf 
     sudo ./waf install
 
+Finally, reinstall minindn using:
+
+    sudo ./install.sh -a
+
 After this step is completed, run the emulator:
 
     sudo minindn --nlsr-security
