@@ -1,7 +1,7 @@
 # FYP
 NDN + Blockchain
 
-##Installation Instructions
+## Installation Instructions
 
 In order to run, install MiniNDN from their [repo](https://github.com/named-data/mini-ndn).
 Clone the repository and run:
